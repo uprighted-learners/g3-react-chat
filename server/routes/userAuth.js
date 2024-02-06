@@ -1,9 +1,9 @@
 const router = require('express').Router();
 const User = require('../models/Users');
-const bcryt = require('bcrypt');
+const bcryptjs = require('bcryptjs');
 const jwt = require('jsonwebtoken');
-const SALT = env.process.SALT;
-const JWT_KEY = env.process.JWT_KEY;
+const SALT = process.env.SALT;
+const JWT_KEY = process.env.JWT_KEY;
 
 router.post('/register', async (req, res) => {
   try {
@@ -19,7 +19,7 @@ router.post('/register', async (req, res) => {
       firstName,
       lastName,
       email,
-      password: bcryt.hashSync(password, SALT),
+      password: bcryptjs.hashSync(password, SALT),
     });
     await newUser.save();
 
@@ -32,6 +32,7 @@ router.post('/register', async (req, res) => {
       },
     });
   } catch (error) {
+    console.log(error);
     res.status(500).json({
       success: false,
       message: 'Internal server error',
@@ -51,7 +52,7 @@ router.post('/login', async (req, res) => {
     }
 
     const foundUser = await User.findOne({email});
-    const verifyPwd = await bcryt.compareSync(password, foundUser.password);
+    const verifyPwd = await bcryptjs.compareSync(password, foundUser.password);
     if (!verifyPwd || !foundUser) {
       return res.status(401).json({
         success: false,

@@ -1,12 +1,8 @@
-import {Router} from 'express';
-import {createUser} from './users';
-import {addMessage} from './messages';
-import {createRoom} from './rooms';
+const {Router} = require('express');
+const roomRouters = require('./rooms');
 
 const router = Router();
 
-router.post('/rooms', createRoom);
-router.post('/users', createUser);
-router.post('/messages', addMessage);
+router.use('/', roomRouters);
 
-export default router;
+module.exports = router;
