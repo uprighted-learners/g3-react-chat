@@ -3,6 +3,24 @@ const Room = require('../../models/Rooms');
 
 const router = Router();
 
+router.get('/rooms', async (req, res) => {
+  try {
+    const rooms = await Room.find({});
+    res.status(200).json({
+      success: true,
+      data: {
+        rooms,
+      },
+    });
+  } catch (error) {
+    res.status(500).json({
+      success: false,
+      message: 'Internal server error',
+      error,
+    });
+  }
+});
+
 router.post('/room', async (req, res) => {
   const {name, description, addedUsers} = req.body;
 
@@ -36,5 +54,4 @@ router.post('/room', async (req, res) => {
     });
   }
 });
-
 module.exports = router;
