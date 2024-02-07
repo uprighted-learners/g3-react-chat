@@ -1,4 +1,4 @@
-import {model, Schema} from 'mongoose';
+const {model, Schema} = require('mongoose');
 
 /**
  * @property {Date} when - Automatically set date/time when message is first created. https://stackoverflow.com/questions/10006218/which-schematype-in-mongoose-is-best-for-a-timestamp
