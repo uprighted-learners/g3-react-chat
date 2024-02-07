@@ -1,7 +1,10 @@
-import Room from '../models/Room.js';
+const {Router} = require('express');
+const Room = require('../../models/Rooms');
 
-const createRoom = async (req, res) => {
-  const { name, description, addedUsers } = req.body;
+const router = Router();
+
+router.post('/room', async (req, res) => {
+  const {name, description, addedUsers} = req.body;
 
   try {
     if (!name || !description || !addedUsers) {
@@ -32,6 +35,6 @@ const createRoom = async (req, res) => {
       error,
     });
   }
-};
+});
 
-export default { createRoom };
+module.exports = router;

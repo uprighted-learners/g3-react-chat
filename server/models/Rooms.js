@@ -1,4 +1,4 @@
-import {model, Schema} from 'mongoose';
+const {model, Schema} = require('mongoose');
 
 /**
  * @property {array of ObjectId} addedUsers - Array types of ObjectId and ref allows access to user properties
