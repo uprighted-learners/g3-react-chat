@@ -69,22 +69,6 @@ router.post('/createMessage', async (req, res) => {
   }
 });
 
-// // Delete a message
-// router.delete('/:id', (req, res) => {
-//   const messageId = parseInt(req.params.id);
-//   db.query('DELETE FROM messages WHERE id = ?', [messageId], (err, result) => {
-//     if (err) {
-//       res.status(500).json({error: err.message});
-//       return;
-//     }
-//     if (result.affectedRows === 0) {
-//       res.status(404).json({error: 'Message not found'});
-//       return;
-//     }
-//     res.sendStatus(204);
-//   });
-// });
-
 router.delete('/deleteMessage', async (req, res) => {
   try {
     const {id} = req.body;
@@ -116,6 +100,41 @@ router.delete('/deleteMessage', async (req, res) => {
       success: false,
       message: 'Internal server error',
       error,
+    });
+  }
+});
+
+// AC1: The endpoint should successfully update a specified message within a specified room.
+// AC2: The endpoint should handle and return appropriate responses for invalid message details or missing required fields.
+// AC3: The endpoint should handle and return appropriate responses if the message or room is not found.
+router.post('/update', async (req, res) => {
+  try {
+    const {roomId, message, newMessage} = req.body;
+    if (!roomId || !message || !newMessage) {
+      return res.status(400).json({
+        success: false,
+        message: 'Missing required fields',
+      });
+    }
+    const foundMessage = await Message.findOneAndUpdate({roomId, message}, {message: newMessage});
+
+    if (!foundMessage) {
+      return res.status(404).json({
+        success: false,
+        message: 'Message or room not found',
+      });
+    } else {
+      return res.status(200).json({
+        success: true,
+        message: 'Message updated successfully',
+      });
+    }
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({
+      success: false,
+      message: 'Internal server error',
+      error: error.message,
     });
   }
 });
