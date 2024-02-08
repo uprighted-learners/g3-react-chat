@@ -93,4 +93,51 @@ router.delete('/deleteRoom', async (req, res) => {
   }
 });
 
+//update room
+router.put('/updateRoom', async (req res) => {  try {
+    const { id, name, description, addedUsers } = reqbody;
+
+    if (!id) {
+ return res.status(400).json({
+        success: false,
+        message: 'No room selected for update',
+      });
+    }
+
+    if (!mongoose.Types.ObjectId.isValid(id)) {
+      return res.status(400).json({
+        success: false,
+        message: 'Invalid message id',
+      });
+    }
+
+    const updatedRoom = await Room.findOneAndUpdate(
+      { _id: mongoose.Types.ObjectId(id) },
+      { name, description, addedUsers },
+      { new: true }
+    );
+
+    if (!updatedRoom) {
+      return res.status(404).json({
+        success: false,
+        message: 'Room not found',
+      });
+    }
+
+    res.status(200).json({
+      success: true,
+      data: {
+        room: updatedRoom,
+      },
+    });
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({
+      success: false,
+      message: 'Internal server error',
+      error,
+    });
+  }
+});
+
 module.exports = router;
