@@ -69,22 +69,6 @@ router.post('/createMessage', async (req, res) => {
   }
 });
 
-// // Delete a message
-// router.delete('/:id', (req, res) => {
-//   const messageId = parseInt(req.params.id);
-//   db.query('DELETE FROM messages WHERE id = ?', [messageId], (err, result) => {
-//     if (err) {
-//       res.status(500).json({error: err.message});
-//       return;
-//     }
-//     if (result.affectedRows === 0) {
-//       res.status(404).json({error: 'Message not found'});
-//       return;
-//     }
-//     res.sendStatus(204);
-//   });
-// });
-
 router.delete('/deleteMessage', async (req, res) => {
   try {
     const { id } = req.body;
