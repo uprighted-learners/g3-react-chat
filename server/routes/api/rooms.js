@@ -1,6 +1,6 @@
-const {Router} = require('express');
+const mongoose = require('mongoose');
+const { Router } = require('express');
 const Room = require('../../models/Rooms');
-
 const router = Router();
 
 router.get('/rooms', async (req, res) => {
@@ -21,8 +21,9 @@ router.get('/rooms', async (req, res) => {
   }
 });
 
+//create new room
 router.post('/room', async (req, res) => {
-  const {name, description, addedUsers} = req.body;
+  const { name, description, addedUsers } = req.body;
 
   try {
     if (!name || !description || !addedUsers) {
@@ -54,4 +55,42 @@ router.post('/room', async (req, res) => {
     });
   }
 });
+
+//delete room
+router.delete('/deleteRoom', async (req, res) => {
+  try {
+    const { id } = req.body;
+    console.log(id);
+    if (!id) {
+      return res.status(400).json({
+        success: false,
+        message: 'No room selected for deletion',
+      });
+    }
+
+    if (!mongoose.Types.ObjectId.isValid(id)) {
+      return res.status(400).json({
+        success: false,
+        message: 'Invalid message id',
+      });
+    }
+
+    await Room.findOneAndDelete({ _id: mongoose.Types.ObjectId(id) });
+
+    res.status(200).json({
+      success: true,
+      data: {
+        message: 'Room deleted.',
+      },
+    });
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({
+      success: false,
+      message: 'Internal server error',
+      error,
+    });
+  }
+});
+
 module.exports = router;
