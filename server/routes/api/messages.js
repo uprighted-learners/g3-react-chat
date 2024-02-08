@@ -1,5 +1,5 @@
 const mongoose = require('mongoose');
-const {Router} = require('express');
+const { Router } = require('express');
 const Message = require('../../models/Messages');
 const router = Router();
 
@@ -39,7 +39,7 @@ router.get('/', async (req, res) => {
 
 router.post('/createMessage', async (req, res) => {
   try {
-    const {timestamp, userId, roomId, message} = req.body;
+    const { timestamp, userId, roomId, message } = req.body;
     if (!timestamp || !userId || !roomId || !message) {
       return res.status(400).json({
         success: false,
@@ -71,7 +71,7 @@ router.post('/createMessage', async (req, res) => {
 
 router.delete('/deleteMessage', async (req, res) => {
   try {
-    const {id} = req.body;
+    const { id } = req.body;
     if (!id) {
       return res.status(400).json({
         success: false,
@@ -86,7 +86,7 @@ router.delete('/deleteMessage', async (req, res) => {
       });
     }
 
-    await Message.findOneAndDelete({_id: mongoose.Types.ObjectId(id)});
+    await Message.findOneAndDelete({ _id: mongoose.Types.ObjectId(id) });
 
     res.status(200).json({
       success: true,
@@ -104,9 +104,6 @@ router.delete('/deleteMessage', async (req, res) => {
   }
 });
 
-// AC1: The endpoint should successfully update a specified message within a specified room.
-// AC2: The endpoint should handle and return appropriate responses for invalid message details or missing required fields.
-// AC3: The endpoint should handle and return appropriate responses if the message or room is not found.
 router.post('/update', async (req, res) => {
   try {
     const {roomId, message, newMessage} = req.body;
@@ -138,5 +135,4 @@ router.post('/update', async (req, res) => {
     });
   }
 });
-
 module.exports = router;
