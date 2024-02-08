@@ -1,5 +1,5 @@
 const mongoose = require('mongoose');
-const { Router } = require('express');
+const {Router} = require('express');
 const Message = require('../../models/Messages');
 const router = Router();
 
@@ -39,7 +39,7 @@ router.get('/', async (req, res) => {
 
 router.post('/createMessage', async (req, res) => {
   try {
-    const { timestamp, userId, roomId, message } = req.body;
+    const {timestamp, userId, roomId, message} = req.body;
     if (!timestamp || !userId || !roomId || !message) {
       return res.status(400).json({
         success: false,
@@ -71,7 +71,7 @@ router.post('/createMessage', async (req, res) => {
 
 router.delete('/deleteMessage', async (req, res) => {
   try {
-    const { id } = req.body;
+    const {id} = req.body;
     if (!id) {
       return res.status(400).json({
         success: false,
@@ -86,7 +86,7 @@ router.delete('/deleteMessage', async (req, res) => {
       });
     }
 
-    await Message.findOneAndDelete({ _id: mongoose.Types.ObjectId(id) });
+    await Message.findOneAndDelete({_id: mongoose.Types.ObjectId(id)});
 
     res.status(200).json({
       success: true,
@@ -104,4 +104,35 @@ router.delete('/deleteMessage', async (req, res) => {
   }
 });
 
+router.patch('/update', async (req, res) => {
+  try {
+    const {roomId, message, newMessage} = req.body;
+    if (!roomId || !message || !newMessage) {
+      return res.status(400).json({
+        success: false,
+        message: 'Missing required fields',
+      });
+    }
+    const foundMessage = await Message.findOneAndUpdate({roomId, message}, {message: newMessage});
+
+    if (!foundMessage) {
+      return res.status(404).json({
+        success: false,
+        message: 'Message or room not found',
+      });
+    } else {
+      return res.status(200).json({
+        success: true,
+        message: 'Message updated successfully',
+      });
+    }
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({
+      success: false,
+      message: 'Internal server error',
+      error: error.message,
+    });
+  }
+});
 module.exports = router;
