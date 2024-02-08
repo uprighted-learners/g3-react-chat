@@ -1,5 +1,6 @@
 const mongoose = require('mongoose');
-const { Router } = require('express');
+const {Router} = require('express');
+const isAdmin = require('../middleware/isAdmin');
 const Room = require('../../models/Rooms');
 const router = Router();
 
@@ -23,7 +24,7 @@ router.get('/rooms', async (req, res) => {
 
 //create new room
 router.post('/room', async (req, res) => {
-  const { name, description, addedUsers } = req.body;
+  const {name, description, addedUsers} = req.body;
 
   try {
     if (!name || !description || !addedUsers) {
@@ -57,9 +58,9 @@ router.post('/room', async (req, res) => {
 });
 
 //delete room
-router.delete('/deleteRoom', async (req, res) => {
+router.delete('/deleteRoom', isAdmin, async (req, res) => {
   try {
-    const { id } = req.body;
+    const {id} = req.body;
     console.log(id);
     if (!id) {
       return res.status(400).json({
@@ -75,7 +76,7 @@ router.delete('/deleteRoom', async (req, res) => {
       });
     }
 
-    await Room.findOneAndDelete({ _id: mongoose.Types.ObjectId(id) });
+    await Room.findOneAndDelete({_id: mongoose.Types.ObjectId(id)});
 
     res.status(200).json({
       success: true,
@@ -94,11 +95,12 @@ router.delete('/deleteRoom', async (req, res) => {
 });
 
 //update room
-router.put('/updateRoom', async (req res) => {  try {
-    const { id, name, description, addedUsers } = reqbody;
+router.patch('/updateRoom', isAdmin, async (req, res) => {
+  try {
+    const {id, name, description, addedUsers} = req.body;
 
     if (!id) {
- return res.status(400).json({
+      return res.status(400).json({
         success: false,
         message: 'No room selected for update',
       });
@@ -111,11 +113,7 @@ router.put('/updateRoom', async (req res) => {  try {
       });
     }
 
-    const updatedRoom = await Room.findOneAndUpdate(
-      { _id: mongoose.Types.ObjectId(id) },
-      { name, description, addedUsers },
-      { new: true }
-    );
+    const updatedRoom = await Room.findOneAndUpdate({_id: mongoose.Types.ObjectId(id)}, {name, description, addedUsers}, {new: true});
 
     if (!updatedRoom) {
       return res.status(404).json({
