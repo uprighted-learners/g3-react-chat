@@ -1,4 +1,4 @@
-const { Router } = require('express');
+const {Router} = require('express');
 const Room = require('../../models/Rooms');
 
 const router = Router();
@@ -22,7 +22,7 @@ router.get('/rooms', async (req, res) => {
 });
 
 router.post('/room', async (req, res) => {
-  const { name, description, addedUsers } = req.body;
+  const {name, description, addedUsers} = req.body;
 
   try {
     if (!name || !description || !addedUsers) {

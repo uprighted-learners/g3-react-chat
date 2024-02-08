@@ -1,5 +1,5 @@
-// AC1: The endpoint should return a list of all messages within a specified room.
-const { Router } = require('express');
+const mongoose = require('mongoose');
+const {Router} = require('express');
 const Message = require('../../models/Messages');
 const router = Router();
 
@@ -39,7 +39,7 @@ router.get('/', async (req, res) => {
 
 router.post('/createMessage', async (req, res) => {
   try {
-    const { timestamp, userId, roomId, message } = req.body;
+    const {timestamp, userId, roomId, message} = req.body;
     if (!timestamp || !userId || !roomId || !message) {
       return res.status(400).json({
         success: false,
@@ -69,9 +69,25 @@ router.post('/createMessage', async (req, res) => {
   }
 });
 
+// // Delete a message
+// router.delete('/:id', (req, res) => {
+//   const messageId = parseInt(req.params.id);
+//   db.query('DELETE FROM messages WHERE id = ?', [messageId], (err, result) => {
+//     if (err) {
+//       res.status(500).json({error: err.message});
+//       return;
+//     }
+//     if (result.affectedRows === 0) {
+//       res.status(404).json({error: 'Message not found'});
+//       return;
+//     }
+//     res.sendStatus(204);
+//   });
+// });
+
 router.delete('/deleteMessage', async (req, res) => {
   try {
-    const { id } = req.body;
+    const {id} = req.body;
     if (!id) {
       return res.status(400).json({
         success: false,
@@ -86,7 +102,7 @@ router.delete('/deleteMessage', async (req, res) => {
       });
     }
 
-    await Message.findOneAndDelete({ _id: mongoose.Types.ObjectId(id) });
+    await Message.findOneAndDelete({_id: mongoose.Types.ObjectId(id)});
 
     res.status(200).json({
       success: true,
@@ -95,6 +111,7 @@ router.delete('/deleteMessage', async (req, res) => {
       },
     });
   } catch (error) {
+    console.log(error);
     res.status(500).json({
       success: false,
       message: 'Internal server error',
