@@ -1,4 +1,3 @@
-const mongoose = require('mongoose');
 const {Router} = require('express');
 const User = require('../../models/Users');
 const router = Router();
@@ -89,3 +88,4 @@ router.delete('/delete', async (req, res) => {
     });
   }
 });
+module.exports = router;

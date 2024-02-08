@@ -1,5 +1,6 @@
 const mongoose = require('mongoose');
 const {Router} = require('express');
+const isAdmin = require('../middleware/isAdmin');
 const Message = require('../../models/Messages');
 const router = Router();
 
@@ -69,7 +70,7 @@ router.post('/createMessage', async (req, res) => {
   }
 });
 
-router.delete('/deleteMessage', async (req, res) => {
+router.delete('/deleteMessage', isAdmin, async (req, res) => {
   try {
     const {id} = req.body;
     if (!id) {
@@ -104,7 +105,7 @@ router.delete('/deleteMessage', async (req, res) => {
   }
 });
 
-router.patch('/update', async (req, res) => {
+router.patch('/update', isAdmin, async (req, res) => {
   try {
     const {roomId, message, newMessage} = req.body;
     if (!roomId || !message || !newMessage) {

@@ -5,6 +5,7 @@ const UserSchema = new Schema({
   lastName: {type: String, required: true},
   email: {type: String, unique: true, lowercase: true, required: true},
   password: {type: String, required: true},
+  isAdmin: {type: Boolean, default: false},
 });
 
 module.exports = model('User', UserSchema);
