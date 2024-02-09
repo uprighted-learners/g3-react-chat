@@ -75,7 +75,7 @@ router.delete('/delete', isAdmin, checkMissingFields('roomId'), async (req, res)
 });
 
 //update room
-router.patch('/update', isAdmin, checkMissingFields('roomId'), async (req, res) => {
+router.patch('/update', isAdmin, checkMissingFields('roomId', 'name', 'description', 'addedUsers'), async (req, res) => {
   try {
     const {roomId, name, description, addedUsers} = req.body;
 
