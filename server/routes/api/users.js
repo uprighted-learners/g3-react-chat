@@ -1,4 +1,4 @@
-const {Router} = require('express');
+const { Router } = require('express');
 const bcryptjs = require('bcryptjs');
 const User = require('../../models/Users');
 const router = Router();
@@ -6,7 +6,7 @@ const SALT = 10;
 
 router.patch('/update', async (req, res) => {
   try {
-    const {id, firstName, lastName, email, password} = req.body;
+    const { id, firstName, lastName, email, password } = req.body;
 
     if (!firstName && !lastName && !email && !password) {
       return res.status(400).json({
@@ -52,10 +52,10 @@ router.patch('/update', async (req, res) => {
       },
     });
   } catch (error) {
-    console.error(error);
-    res.status(500).json({
+    console.log(error);
+    res.status(this.status).json({
       success: false,
-      message: 'Internal server error',
+      message: this.error,
       error,
     });
   }
@@ -81,10 +81,10 @@ router.delete('/delete', async (req, res) => {
       message: 'User deleted successfully',
     });
   } catch (error) {
-    console.error(error);
-    res.status(500).json({
+    console.log(error);
+    res.status(this.status).json({
       success: false,
-      message: 'Internal server error',
+      message: this.error,
       error,
     });
   }

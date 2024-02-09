@@ -8,7 +8,7 @@ const JWT_KEY = process.env.JWT_KEY;
 
 router.post('/register', async (req, res) => {
   try {
-    const {firstName, lastName, email, password} = req.body;
+    const { firstName, lastName, email, password } = req.body;
     if (!firstName || !lastName || !email || !password) {
       return res.status(400).json({
         success: false,
@@ -34,9 +34,9 @@ router.post('/register', async (req, res) => {
     });
   } catch (error) {
     console.log(error);
-    res.status(500).json({
+    res.status(this.status).json({
       success: false,
-      message: 'Internal server error',
+      message: this.error,
       error,
     });
   }
@@ -44,7 +44,7 @@ router.post('/register', async (req, res) => {
 
 router.get('/login', async (req, res) => {
   try {
-    const {email, password} = req.body;
+    const { email, password } = req.body;
     if (!email || !password) {
       return res.status(400).json({
         success: false,
@@ -52,7 +52,7 @@ router.get('/login', async (req, res) => {
       });
     }
 
-    const foundUser = await User.findOne({email});
+    const foundUser = await User.findOne({ email });
     const verifyPwd = await bcryptjs.compareSync(password, foundUser.password);
     if (!verifyPwd || !foundUser) {
       return res.status(401).json({
@@ -70,16 +70,19 @@ router.get('/login', async (req, res) => {
     }
   } catch (error) {
     console.log(error);
-    res.status(500).json({
+    res.status(this.status).json({
       success: false,
-      message: 'Internal server error',
+      message: this.error,
       error,
     });
   }
 });
+
 module.exports = router;
 
 function createUserToken(user) {
-  const token = jwt.sign({_id: user._id}, JWT_KEY, {expiresIn: 60 * 60 * 24});
+  const token = jwt.sign({ _id: user._id }, JWT_KEY, {
+    expiresIn: 60 * 60 * 24,
+  });
   return token;
 }
