@@ -136,7 +136,9 @@ router.delete('/delete', isAdmin, async (req, res) => {
 router.patch('/update', isAdmin, async (req, res) => {
   try {
     const { roomId, message, newMessage } = req.body;
-    if (!roomId || !message || !newMessage) {
+    const requiredFields = ['roomId', 'message', 'newMessage'];
+
+    if (requiredFields.some((field) => !req.body[field])) {
       return res.status(400).json({
         success: false,
         message: 'Missing required fields',
