@@ -4,7 +4,7 @@ const isAdmin = require('../middleware/isAdmin');
 const Room = require('../../models/Rooms');
 const router = Router();
 
-router.get('/rooms', async (req, res) => {
+router.get('/', async (req, res) => {
   try {
     const rooms = await Room.find({});
     res.status(200).json({
@@ -23,7 +23,7 @@ router.get('/rooms', async (req, res) => {
 });
 
 //create new room
-router.post('/room', async (req, res) => {
+router.post('/create', async (req, res) => {
   const {name, description, addedUsers} = req.body;
 
   try {
@@ -58,7 +58,7 @@ router.post('/room', async (req, res) => {
 });
 
 //delete room
-router.delete('/deleteRoom', isAdmin, async (req, res) => {
+router.delete('/delete', isAdmin, async (req, res) => {
   try {
     const {id} = req.body;
     console.log(id);
@@ -95,7 +95,7 @@ router.delete('/deleteRoom', isAdmin, async (req, res) => {
 });
 
 //update room
-router.patch('/updateRoom', isAdmin, async (req, res) => {
+router.patch('/update', isAdmin, async (req, res) => {
   try {
     const {id, name, description, addedUsers} = req.body;
 

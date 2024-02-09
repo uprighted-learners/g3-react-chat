@@ -5,8 +5,8 @@ const userRouters = require('./users');
 
 const router = Router();
 
-router.use('/', roomRouters);
-router.use('/', messageRouters);
-router.use('/', userRouters);
+router.use('/room', roomRouters);
+router.use('/message', messageRouters);
+router.use('/user', userRouters);
 
 module.exports = router;

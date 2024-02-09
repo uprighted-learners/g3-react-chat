@@ -38,7 +38,7 @@ router.get('/', async (req, res) => {
 //   });
 // });
 
-router.post('/createMessage', async (req, res) => {
+router.post('/create', async (req, res) => {
   try {
     const {timestamp, userId, roomId, message} = req.body;
     if (!timestamp || !userId || !roomId || !message) {
@@ -70,7 +70,7 @@ router.post('/createMessage', async (req, res) => {
   }
 });
 
-router.delete('/deleteMessage', isAdmin, async (req, res) => {
+router.delete('/delete', isAdmin, async (req, res) => {
   try {
     const {id} = req.body;
     if (!id) {
