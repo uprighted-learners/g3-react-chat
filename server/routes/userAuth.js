@@ -1,27 +1,23 @@
+require('dotenv').config();
+const sendErrorResponse = require('../utils/errorHandler');
 const router = require('express').Router();
 const User = require('../models/Users');
 const bcryptjs = require('bcryptjs');
 const jwt = require('jsonwebtoken');
-const SALT = process.env.SALT;
+const checkMissingFields = require('./middleware/checkMissingFields');
+const SALT = 10;
 const JWT_KEY = process.env.JWT_KEY;
 
-router.post('/register', async (req, res) => {
+router.post('/register', checkMissingFields('firstName', 'lastName', 'email', 'password'), async (req, res) => {
   try {
     const {firstName, lastName, email, password} = req.body;
-    if (!firstName || !lastName || !email || !password) {
-      return res.status(400).json({
-        success: false,
-        message: 'Missing required fields',
-      });
-    }
 
-    const newUser = new User({
+    const newUser = await User.create({
       firstName,
       lastName,
       email,
       password: bcryptjs.hashSync(password, SALT),
     });
-    await newUser.save();
 
     const token = createUserToken(newUser);
     res.status(201).json({
@@ -32,27 +28,16 @@ router.post('/register', async (req, res) => {
       },
     });
   } catch (error) {
-    console.log(error);
-    res.status(500).json({
-      success: false,
-      message: 'Internal server error',
-      error,
-    });
+    sendErrorResponse(error, res);
   }
 });
 
-router.post('/login', async (req, res) => {
+router.get('/login', checkMissingFields('email', 'password'), async (req, res) => {
   try {
     const {email, password} = req.body;
-    if (!email || !password) {
-      return res.status(400).json({
-        success: false,
-        message: 'Missing required fields',
-      });
-    }
 
     const foundUser = await User.findOne({email});
-    const verifyPwd = await bcryptjs.compareSync(password, foundUser.password);
+    const verifyPwd = bcryptjs.compareSync(password, foundUser.password);
     if (!verifyPwd || !foundUser) {
       return res.status(401).json({
         success: false,
@@ -68,16 +53,15 @@ router.post('/login', async (req, res) => {
       });
     }
   } catch (error) {
-    res.status(500).json({
-      success: false,
-      message: 'Internal server error',
-      error,
-    });
+    sendErrorResponse(error, res);
   }
 });
+
 module.exports = router;
 
 function createUserToken(user) {
-  const token = jwt.sign({_id: user._id}, JWT_KEY, {expiresIn: 60 * 60 * 24});
+  const token = jwt.sign({_id: user._id}, JWT_KEY, {
+    expiresIn: 60 * 60 * 24,
+  });
   return token;
 }

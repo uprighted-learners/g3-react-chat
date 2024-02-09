@@ -6,10 +6,10 @@ const {model, Schema} = require('mongoose');
  */
 const MessageSchema = new Schema(
   {
-    when: {type: Date, default: Date.now, required: true},
-    user: {type: Schema.Types.ObjectId, required: true, ref: 'User'},
-    room: {type: Schema.Types.ObjectId, required: true, ref: 'Room'},
-    body: {type: String, required: true},
+    timestamps: {type: Date, default: Date.now},
+    userId: {type: Schema.Types.ObjectId, required: true, ref: 'User'},
+    roomId: {type: Schema.Types.ObjectId, required: true, ref: 'Room'},
+    message: {type: String, required: true},
   },
   {timestamps: true}
 );
