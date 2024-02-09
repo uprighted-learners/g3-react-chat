@@ -1,8 +1,11 @@
+//TODO - remove old delete endpoint if new one is successful.
+
 const mongoose = require('mongoose');
 const { Router } = require('express');
 const isAdmin = require('../middleware/isAdmin');
 const Message = require('../../models/Messages');
 const router = Router();
+const sendErrorResponse = require('../utils/errorHandler');
 
 router.get('/', async (req, res) => {
   try {
@@ -14,29 +17,9 @@ router.get('/', async (req, res) => {
       },
     });
   } catch (error) {
-    console.log(error);
-    res.status(this.status).json({
-      success: false,
-      message: this.error,
-      error,
-    });
+    sendErrorResponse(error, res);
   }
 });
-
-// router.get('/message/:id', (req, res) => {
-//   const messageId = parseInt(req.params.id);
-//   db.query('SELECT * FROM messages WHERE id = ?', [messageId], (err, rows) => {
-//     if (err) {
-//       res.status(500).json({error: err.message});
-//       return;
-//     }
-//     if (rows.length === 0) {
-//       res.status(404).json({error: 'Message not found'});
-//       return;
-//     }
-//     res.json(rows[0]);
-//   });
-// });
 
 router.post('/create', async (req, res) => {
   try {
@@ -47,12 +30,13 @@ router.post('/create', async (req, res) => {
         message: 'Missing required fields',
       });
     }
-    const newMessage = new Message({
+
+    //removed the await Save and just added the await .create as a shorter method.
+    const newMessage = await Message.create({
       userId,
       roomId,
       message,
     });
-    await newMessage.save();
 
     res.status(201).json({
       success: true,
@@ -61,12 +45,7 @@ router.post('/create', async (req, res) => {
       },
     });
   } catch (error) {
-    console.log(error);
-    res.status(this.status).json({
-      success: false,
-      message: this.error,
-      error,
-    });
+    sendErrorResponse(error, res);
   }
 });
 
@@ -76,41 +55,83 @@ router.delete('/delete', isAdmin, async (req, res) => {
     if (!id) {
       return res.status(400).json({
         success: false,
-        message: 'No message selected for deletion',
+        message: error.NO_MESSAGE_SELECTED_FOR_DELETION,
       });
     }
 
     if (!mongoose.Types.ObjectId.isValid(id)) {
       return res.status(400).json({
         success: false,
-        message: 'Invalid message id',
+        message: error.INVALID_MESSAGE_ID,
       });
     }
 
-    if (await Message.findOneAndDelete({ _id: mongoose.Types.ObjectId(id) })) {
+    const deletedMessage = await Message.findOneAndDelete({
+      _id: mongoose.Types.ObjectId(id),
+    });
+
+    if (!deletedMessage) {
+      return res.status(200).json({
+        success: false,
+        data: {
+          message: 'Cannot find message to be deleted.',
+        },
+      });
+    } else {
       return res.status(200).json({
         success: true,
         data: {
           message: 'Message deleted.',
         },
       });
-    } else {
-      return res.status(200).json({
-        success: false,
-        data: {
-          message: 'Cannot find message to be delete.',
-        },
-      });
     }
   } catch (error) {
-    console.log(error);
-    res.status(this.status).json({
-      success: false,
-      message: this.error,
-      error,
-    });
+    sendErrorResponse(error, res);
   }
 });
+
+//Old router:delete code....to be removed if new refactored one works.
+// router.delete('/delete', isAdmin, async (req, res) => {
+//   try {
+//     const { id } = req.body;
+//     if (!id) {
+//       return res.status(400).json({
+//         success: false,
+//         message: 'No message selected for deletion',
+//       });
+//     }
+
+//     if (!mongoose.Types.ObjectId.isValid(id)) {
+//       return res.status(400).json({
+//         success: false,
+//         message: 'Invalid message id',
+//       });
+//     }
+
+//     if (await Message.findOneAndDelete({ _id: mongoose.Types.ObjectId(id) })) {
+//       return res.status(200).json({
+//         success: true,
+//         data: {
+//           message: 'Message deleted.',
+//         },
+//       });
+//     } else {
+//       return res.status(200).json({
+//         success: false,
+//         data: {
+//           message: 'Cannot find message to be delete.',
+//         },
+//       });
+//     }
+//   } catch (error) {
+//     console.error();
+//     res.status(this.status).json({
+//       success: false,
+//       message: this.error,
+//       error,
+//     });
+//   }
+// });
 
 router.patch('/update', isAdmin, async (req, res) => {
   try {
@@ -138,12 +159,8 @@ router.patch('/update', isAdmin, async (req, res) => {
       });
     }
   } catch (error) {
-    console.log(error);
-    res.status(this.status).json({
-      success: false,
-      message: this.error,
-      error,
-    });
+    sendErrorResponse(error, res);
   }
 });
+
 module.exports = router;

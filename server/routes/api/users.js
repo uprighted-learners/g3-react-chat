@@ -52,12 +52,7 @@ router.patch('/update', async (req, res) => {
       },
     });
   } catch (error) {
-    console.log(error);
-    res.status(this.status).json({
-      success: false,
-      message: this.error,
-      error,
-    });
+    sendErrorResponse(error, res);
   }
 });
 
@@ -81,12 +76,8 @@ router.delete('/delete', async (req, res) => {
       message: 'User deleted successfully',
     });
   } catch (error) {
-    console.log(error);
-    res.status(this.status).json({
-      success: false,
-      message: this.error,
-      error,
-    });
+    sendErrorResponse(error, res);
   }
 });
+
 module.exports = router;

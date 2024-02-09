@@ -3,6 +3,7 @@ const { Router } = require('express');
 const isAdmin = require('../middleware/isAdmin');
 const Room = require('../../models/Rooms');
 const router = Router();
+const sendErrorResponse = require('../utils/errorHandler');
 
 router.get('/', async (req, res) => {
   try {
@@ -14,11 +15,7 @@ router.get('/', async (req, res) => {
       },
     });
   } catch (error) {
-    res.status(500).json({
-      success: false,
-      message: 'Internal server error',
-      error,
-    });
+    sendErrorResponse(error, res);
   }
 });
 
@@ -49,12 +46,7 @@ router.post('/create', async (req, res) => {
       },
     });
   } catch (error) {
-    console.log(error);
-    res.status(this.status).json({
-      success: false,
-      message: this.error,
-      error,
-    });
+    sendErrorResponse(error, res);
   }
 });
 
@@ -92,12 +84,7 @@ router.delete('/delete', isAdmin, async (req, res) => {
       });
     }
   } catch (error) {
-    console.log(error);
-    res.status(this.status).json({
-      success: false,
-      message: this.error,
-      error,
-    });
+    sendErrorResponse(error, res);
   }
 });
 
@@ -140,12 +127,7 @@ router.patch('/update', isAdmin, async (req, res) => {
       },
     });
   } catch (error) {
-    console.log(error);
-    res.status(this.status).json({
-      success: false,
-      message: this.error,
-      error,
-    });
+    sendErrorResponse(error, res);
   }
 });
 
