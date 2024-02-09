@@ -61,34 +61,34 @@ Your room document in your `rooms` collection should resemble the following:
 
 ### Users
 
-- [ ] Create user endpoint
-- [ ] Login user endpoint
+- [x] Create user endpoint
+- [x] Login user endpoint
 
 ### Rooms
 
-- [ ] Create endpoint
-- [ ] Display all rooms endpoint
+- [x] Create endpoint
+- [x] Display all rooms endpoint
 
 ### Messages
 
-- [ ] Display all messages within a room endpoint
-- [ ] Create a message within a room endpoint
-- [ ] Update a message within a room endpoint
-- [ ] Delete a message within a room endpoint
+- [x] Display all messages within a room endpoint
+- [x] Create a message within a room endpoint
+- [x] Update a message within a room endpoint
+- [x] Delete a message within a room endpoint
 
 ## Icebox
 
 As this is a group project, it would be much easier to work on it if everyone had access to the same data. For that reason:
 
-- [ ] Setup MongoDB Atlas cluster and utilize it to CRUD your database for this project. You must utilize .dotenv in this project to hide your username, password, and your connection string away from prying eyes of other GitHub users.
+- [x] Setup MongoDB Atlas cluster and utilize it to CRUD your database for this project. You must utilize .dotenv in this project to hide your username, password, and your connection string away from prying eyes of other GitHub users.
 
-- [ ] Add `update` and `delete` endpoints to your `rooms` controller
-- [ ] Add `update` and `delete` endpoints to your `users` controller
+- [x] Add `update` and `delete` endpoints to your `rooms` controller
+- [x] Add `update` and `delete` endpoints to your `users` controller
 
 > HINT
 > Allowing updates on users means that collection associations need to be based on things user **CANNOT** change.
 
-- [ ] Add isAdmin to your user collection and build middleware that only allows admins to update and delete rooms and messages.
+- [x] Add isAdmin to your user collection and build middleware that only allows admins to update and delete rooms and messages.
 
 # React Chat Front End
 
