@@ -1,8 +1,9 @@
+require('dotenv').config();
 const router = require('express').Router();
 const User = require('../models/Users');
 const bcryptjs = require('bcryptjs');
 const jwt = require('jsonwebtoken');
-const SALT = process.env.SALT;
+const SALT = 10;
 const JWT_KEY = process.env.JWT_KEY;
 
 router.post('/register', async (req, res) => {
@@ -41,7 +42,7 @@ router.post('/register', async (req, res) => {
   }
 });
 
-router.post('/login', async (req, res) => {
+router.get('/login', async (req, res) => {
   try {
     const {email, password} = req.body;
     if (!email || !password) {
@@ -68,6 +69,7 @@ router.post('/login', async (req, res) => {
       });
     }
   } catch (error) {
+    console.log(error);
     res.status(500).json({
       success: false,
       message: 'Internal server error',

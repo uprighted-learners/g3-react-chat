@@ -40,15 +40,14 @@ router.get('/', async (req, res) => {
 
 router.post('/create', async (req, res) => {
   try {
-    const {timestamp, userId, roomId, message} = req.body;
-    if (!timestamp || !userId || !roomId || !message) {
+    const {userId, roomId, message} = req.body;
+    if (!userId || !roomId || !message) {
       return res.status(400).json({
         success: false,
         message: 'Missing required fields',
       });
     }
     const newMessage = new Message({
-      timestamp,
       userId,
       roomId,
       message,
@@ -62,6 +61,7 @@ router.post('/create', async (req, res) => {
       },
     });
   } catch (error) {
+    console.log(error);
     res.status(500).json({
       success: false,
       message: 'Internal server error',
@@ -87,14 +87,21 @@ router.delete('/delete', isAdmin, async (req, res) => {
       });
     }
 
-    await Message.findOneAndDelete({_id: mongoose.Types.ObjectId(id)});
-
-    res.status(200).json({
-      success: true,
-      data: {
-        message: 'Message deleted.',
-      },
-    });
+    if (await Message.findOneAndDelete({_id: mongoose.Types.ObjectId(id)})) {
+      return res.status(200).json({
+        success: true,
+        data: {
+          message: 'Message deleted.',
+        },
+      });
+    } else {
+      return res.status(200).json({
+        success: false,
+        data: {
+          message: 'Cannot find message to be delete.',
+        },
+      });
+    }
   } catch (error) {
     console.log(error);
     res.status(500).json({

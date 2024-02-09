@@ -1,5 +1,5 @@
 const isAdmin = (req, res, next) => {
-  if (req.user.isAdmin) {
+  if (!req.body.user.isAdmin) {
     return res.status(403).json({
       success: false,
       message: 'Permission denied.',

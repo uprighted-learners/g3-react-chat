@@ -1,11 +1,12 @@
 const {Router} = require('express');
+const bcryptjs = require('bcryptjs');
 const User = require('../../models/Users');
 const router = Router();
+const SALT = 10;
 
 router.patch('/update', async (req, res) => {
   try {
-    const {firstName, lastName, email, password} = req.body;
-    const userId = req.user.id;
+    const {id, firstName, lastName, email, password} = req.body;
 
     if (!firstName && !lastName && !email && !password) {
       return res.status(400).json({
@@ -14,7 +15,7 @@ router.patch('/update', async (req, res) => {
       });
     }
 
-    const user = await User.findById(userId);
+    const user = await User.findById(id);
     if (!user) {
       return res.status(404).json({
         success: false,
@@ -62,7 +63,7 @@ router.patch('/update', async (req, res) => {
 
 router.delete('/delete', async (req, res) => {
   try {
-    const userId = req.user.id;
+    const userId = req.body.id;
 
     const user = await User.findById(userId);
 

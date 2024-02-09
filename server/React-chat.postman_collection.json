@@ -1,0 +1,358 @@
+{
+	"info": {
+		"_postman_id": "7d39f130-5fa9-419b-81ed-b9d095898b25",
+		"name": "React-chat",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "32097843"
+	},
+	"item": [
+		{
+			"name": "user-register",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"firstName\": \"tester\",\r\n    \"lastName\": \"1\",\r\n    // replace with new email each time you make this request since email might already existed in DB\r\n    \"email\" : \"tester1@gmail.com\", \r\n    \"password\": \"randompassword\",\r\n    \"isAdmin\" : false\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:3000/userAuth/register",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"userAuth",
+						"register"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "user-login",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"email\" : \"tester1@gmail.com\", \r\n    \"password\": \"randompassword\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:3000/userAuth/login",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"userAuth",
+						"login"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "user-update",
+			"request": {
+				"method": "PATCH",
+				"header": [
+					{
+						"key": "id",
+						"value": "65c594c76811dd52640ddec3",
+						"type": "text",
+						"disabled": true
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"id\" : \"65c594c76811dd52640ddec3\",\r\n    // change any data below to update it\r\n    \"firstName\": \"tester\",\r\n    \"lastName\": \"1\",\r\n    \"email\" : \"tester1@email.com\", \r\n    \"password\": \"randompassword\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:3000/api/user/update",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"api",
+						"user",
+						"update"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "user-delete",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"id\" : \"65c594c76811dd52640ddec3\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:3000/api/user/delete",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"api",
+						"user",
+						"delete"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "room-get-all",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:3000/api/room/",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"api",
+						"room",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "room-create",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"name\": \"test chat room\",\r\n    \"description\": \"this is a test chat room\",\r\n    \"addedUsers\": []\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:3000/api/room/create",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"api",
+						"room",
+						"create"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "room-delete",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    // room id\r\n    \"id\": \"65c59a94c5693e537bfe7fbb\",\r\n    // user\r\n    \"user\" : {\r\n        \"isAdmin\": true\r\n    }\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:3000/api/room/delete",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"api",
+						"room",
+						"delete"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "room-update",
+			"request": {
+				"method": "PATCH",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"id\": \"65c59e11fe561e5923f91957\",\r\n    \"name\": \"update test\",\r\n    \"description\": \"this is a test\",\r\n    \"addedUsers\": [],\r\n    \"user\":{\r\n        \"isAdmin\": true\r\n    }\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:3000/api/room/update",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"api",
+						"room",
+						"update"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "message-get-all",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:3000/api/message",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"api",
+						"message"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "message-create",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"userId\": \"65c2a220c559dd72e7afe5d2\",\r\n    \"roomId\": \"65c29e140513b28af7b13bd7\",\r\n    \"message\": \"Hello world\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:3000/api/message/create",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"api",
+						"message",
+						"create"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "message-delete",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"id\": \"65c415011f9a8602a3400173\",\r\n    \"user\": {\r\n        \"isAdmin\": true\r\n    }\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:3000/api/message/delete",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"api",
+						"message",
+						"delete"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "message-update",
+			"request": {
+				"method": "PATCH",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"roomId\": \"65c29e140513b28af7b13bd7\",\r\n    \"message\": \"Hello world\",\r\n    \"newMessage\": \"Goodbye world\",\r\n    \"user\": {\r\n        \"isAdmin\": true\r\n    }\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:3000/api/message/update",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"api",
+						"message",
+						"update"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

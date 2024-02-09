@@ -61,7 +61,6 @@ router.post('/create', async (req, res) => {
 router.delete('/delete', isAdmin, async (req, res) => {
   try {
     const {id} = req.body;
-    console.log(id);
     if (!id) {
       return res.status(400).json({
         success: false,
@@ -72,18 +71,25 @@ router.delete('/delete', isAdmin, async (req, res) => {
     if (!mongoose.Types.ObjectId.isValid(id)) {
       return res.status(400).json({
         success: false,
-        message: 'Invalid message id',
+        message: 'Invalid room id',
       });
     }
 
-    await Room.findOneAndDelete({_id: mongoose.Types.ObjectId(id)});
-
-    res.status(200).json({
-      success: true,
-      data: {
-        message: 'Room deleted.',
-      },
-    });
+    if (await Room.findOneAndDelete({_id: mongoose.Types.ObjectId(id)})) {
+      return res.status(200).json({
+        success: true,
+        data: {
+          message: 'Room deleted.',
+        },
+      });
+    } else {
+      return res.status(200).json({
+        success: false,
+        data: {
+          message: 'Room does not exist.',
+        },
+      });
+    }
   } catch (error) {
     console.log(error);
     res.status(500).json({
