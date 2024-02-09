@@ -32,6 +32,6 @@ We welcome contributions to MyApp! To get started, please fork the repository an
 MyApp is released under the MIT License. See the LICENSE file for details.
 
 ##Contact
-For any questions or issues, please contact us at contact@myapp.com.
+For any questions or issues, please contact us at .
 
 Acknowledgments
