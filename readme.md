@@ -37,9 +37,11 @@ React Chat includes the following endpoints:
 We welcome contributions to MyApp! To get started, please fork the repository and make your changes on a new branch. When you are ready, submit a pull request and we will review your changes.
 
 ## License
+
 MyApp is released under the MIT License. See the LICENSE file for details.
 
 ## Contact
+
 For any questions or issues, please contact us at .
 
 Acknowledgments
