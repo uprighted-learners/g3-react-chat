@@ -16,13 +16,20 @@ To get started with MyApp, follow these steps:
 MyApp includes the following endpoints:
 
 - /room
-- GET /: Retrieves a list of all rooms.
-- POST /: Creates a new room.
+
+  GET /: Retrieves a list of all rooms.
+
+  POST /: Creates a new room.
+
 - /message
-- GET /:roomId: Retrieves a list of all messages for the given room.
-- POST /: Sends a new message to the given room.
+
+  GET /:roomId: Retrieves a list of all messages for the given room.
+
+  POST /: Sends a new message to the given room.
+
 - /user
-- POST /: Creates a new user.
+
+  POST /: Creates a new user.
 
 ## Contributing
 We welcome contributions to MyApp! To get started, please fork the repository and make your changes on a new branch. When you are ready, submit a pull request and we will review your changes.
