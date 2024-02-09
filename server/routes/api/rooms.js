@@ -1,9 +1,10 @@
 const mongoose = require('mongoose');
-const { Router } = require('express');
+const {Router} = require('express');
 const isAdmin = require('../middleware/isAdmin');
 const Room = require('../../models/Rooms');
 const router = Router();
-const sendErrorResponse = require('../utils/errorHandler');
+const sendErrorResponse = require('../../utils/errorHandler');
+const checkMissingFields = require('../middleware/checkMissingFields');
 
 router.get('/', async (req, res) => {
   try {
@@ -20,24 +21,15 @@ router.get('/', async (req, res) => {
 });
 
 //create new room
-router.post('/create', async (req, res) => {
-  const { name, description, addedUsers } = req.body;
+router.post('/create', checkMissingFields('name', 'description', 'addedUsers'), async (req, res) => {
+  const {name, description, addedUsers} = req.body;
 
   try {
-    if (!name || !description || !addedUsers) {
-      return res.status(400).json({
-        success: false,
-        message: 'Missing required fields',
-      });
-    }
-
-    const newRoom = new Room({
+    const newRoom = await Room.create({
       name,
       description,
       addedUsers,
     });
-
-    await newRoom.save();
 
     res.status(201).json({
       success: true,
@@ -51,24 +43,18 @@ router.post('/create', async (req, res) => {
 });
 
 //delete room
-router.delete('/delete', isAdmin, async (req, res) => {
+router.delete('/delete', isAdmin, checkMissingFields('roomId'), async (req, res) => {
   try {
-    const { id } = req.body;
-    if (!id) {
-      return res.status(400).json({
-        success: false,
-        message: 'No room selected for deletion',
-      });
-    }
+    const roomId = req.body.roomId;
 
-    if (!mongoose.Types.ObjectId.isValid(id)) {
+    if (!mongoose.Types.ObjectId.isValid(roomId)) {
       return res.status(400).json({
         success: false,
         message: 'Invalid room id',
       });
     }
 
-    if (await Room.findOneAndDelete({ _id: mongoose.Types.ObjectId(id) })) {
+    if (await Room.findOneAndDelete({_id: mongoose.Types.ObjectId(roomId)})) {
       return res.status(200).json({
         success: true,
         data: {
@@ -76,10 +62,10 @@ router.delete('/delete', isAdmin, async (req, res) => {
         },
       });
     } else {
-      return res.status(200).json({
+      return res.status(404).json({
         success: false,
         data: {
-          message: 'Room does not exist.',
+          message: 'Room not found.',
         },
       });
     }
@@ -89,29 +75,18 @@ router.delete('/delete', isAdmin, async (req, res) => {
 });
 
 //update room
-router.patch('/update', isAdmin, async (req, res) => {
+router.patch('/update', isAdmin, checkMissingFields('roomId'), async (req, res) => {
   try {
-    const { id, name, description, addedUsers } = req.body;
+    const {roomId, name, description, addedUsers} = req.body;
 
-    if (!id) {
-      return res.status(400).json({
-        success: false,
-        message: 'No room selected for update',
-      });
-    }
-
-    if (!mongoose.Types.ObjectId.isValid(id)) {
+    if (!mongoose.Types.ObjectId.isValid(roomId)) {
       return res.status(400).json({
         success: false,
         message: 'Invalid message id',
       });
     }
 
-    const updatedRoom = await Room.findOneAndUpdate(
-      { _id: mongoose.Types.ObjectId(id) },
-      { name, description, addedUsers },
-      { new: true },
-    );
+    const updatedRoom = await Room.findOneAndUpdate({_id: mongoose.Types.ObjectId(roomId)}, {name, description, addedUsers}, {new: true});
 
     if (!updatedRoom) {
       return res.status(404).json({

@@ -1,21 +1,16 @@
-const { Router } = require('express');
+const {Router} = require('express');
 const bcryptjs = require('bcryptjs');
 const User = require('../../models/Users');
+const checkMissingFields = require('../middleware/checkMissingFields');
 const router = Router();
 const SALT = 10;
 
-router.patch('/update', async (req, res) => {
+router.patch('/update', checkMissingFields('userId', 'firstName', 'lastName', 'email', 'password'), async (req, res) => {
   try {
-    const { id, firstName, lastName, email, password } = req.body;
+    const userId = req.body.userId;
 
-    if (!firstName && !lastName && !email && !password) {
-      return res.status(400).json({
-        success: false,
-        message: 'Missing required fields',
-      });
-    }
+    const user = await User.findById(userId);
 
-    const user = await User.findById(id);
     if (!user) {
       return res.status(404).json({
         success: false,
@@ -23,23 +18,7 @@ router.patch('/update', async (req, res) => {
       });
     }
 
-    // this is a good example for function exaction?
-    if (firstName) {
-      user.firstName = firstName;
-    }
-
-    if (lastName) {
-      user.lastName = lastName;
-    }
-
-    if (email) {
-      user.email = email;
-    }
-
-    if (password) {
-      user.password = bcryptjs.hashSync(password, SALT);
-    }
-
+    updateUserFields(user, req.body);
     await user.save();
 
     return res.status(200).json({
@@ -56,9 +35,9 @@ router.patch('/update', async (req, res) => {
   }
 });
 
-router.delete('/delete', async (req, res) => {
+router.delete('/delete', checkMissingFields('userId'), async (req, res) => {
   try {
-    const userId = req.body.id;
+    const userId = req.body.userId;
 
     const user = await User.findById(userId);
 
@@ -81,3 +60,16 @@ router.delete('/delete', async (req, res) => {
 });
 
 module.exports = router;
+
+const updateUserFields = (user, fields) => {
+  Object.keys(fields).forEach((key) => {
+    // only update fields with new information
+    if (fields[key] !== undefined && fields[key] !== null) {
+      if (key === 'password') {
+        user[key] = bcryptjs.hashSync(fields[key], SALT);
+      } else {
+        user[key] = fields[key];
+      }
+    }
+  });
+};

@@ -55,7 +55,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"email\" : \"tester1@gmail.com\", \r\n    \"password\": \"randompassword\"\r\n}",
+					"raw": "{\r\n    \"email\" : \"tester1@gmail.com\",\r\n    \"password\": \"randompasssword\"\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -90,7 +90,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"id\" : \"65c594c76811dd52640ddec3\",\r\n    // change any data below to update it\r\n    \"firstName\": \"tester\",\r\n    \"lastName\": \"1\",\r\n    \"email\" : \"tester1@email.com\", \r\n    \"password\": \"randompassword\"\r\n}",
+					"raw": "{\r\n    \"userId\" : \"65c599a3c5693e537bfe7fb8\",\r\n    // change any data below to update it\r\n    \"firstName\": \"awesometester\",\r\n    \"lastName\": \"1\",\r\n    \"email\" : \"tester1@email.com\", \r\n    \"password\": \"randompassword\"\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -168,7 +168,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"name\": \"test chat room\",\r\n    \"description\": \"this is a test chat room\",\r\n    \"addedUsers\": []\r\n}",
+					"raw": "{\r\n    \"name\": \"new test chat room\",\r\n    \"description\": \"this is a test chat room\",\r\n    \"addedUsers\": []\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -303,7 +303,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"id\": \"65c415011f9a8602a3400173\",\r\n    \"user\": {\r\n        \"isAdmin\": true\r\n    }\r\n}",
+					"raw": "{\r\n    \"messageId\": \"65c415011f9a8602a3400172\",\r\n    \"user\": {\r\n        \"isAdmin\": true\r\n    }\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -332,7 +332,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"roomId\": \"65c29e140513b28af7b13bd7\",\r\n    \"message\": \"Hello world\",\r\n    \"newMessage\": \"Goodbye world\",\r\n    \"user\": {\r\n        \"isAdmin\": true\r\n    }\r\n}",
+					"raw": "{\r\n    \"messageId\": \"65c29e140513b28af7b13bd7\",\r\n    \"newMessage\": \"Goodbye world\",\r\n    \"user\": {\r\n        \"isAdmin\": true\r\n    }\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
