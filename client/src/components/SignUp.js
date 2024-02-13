@@ -1,7 +1,8 @@
 import React from 'react';
 function SignUpForm() {
   const [state, setState] = React.useState({
-    name: '',
+    firstName: '',
+    lastName: '',
     email: '',
     password: '',
   });
@@ -16,9 +17,9 @@ function SignUpForm() {
   const handleOnSubmit = (evt) => {
     evt.preventDefault();
 
-    const { name, email, password } = state;
+    const { firstName, lastName, email, password } = state;
     alert(
-      `You are sign up with name: ${name} email: ${email} and password: ${password}`,
+      `You are sign up with first name: ${firstName} last name: ${lastName} email: ${email} and password: ${password}`,
     );
 
     for (const key in state) {
@@ -47,10 +48,17 @@ function SignUpForm() {
         <span>or use your email for registration</span>
         <input
           type='text'
-          name='name'
-          value={state.name}
+          name='firstName'
+          value={state.firstNamename}
           onChange={handleChange}
-          placeholder='Name'
+          placeholder='First Name'
+        />
+        <input
+          type='text'
+          name='lastName'
+          value={state.lastName}
+          onChange={handleChange}
+          placeholder='Last Name'
         />
         <input
           type='email'
