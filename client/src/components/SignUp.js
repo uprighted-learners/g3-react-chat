@@ -34,6 +34,7 @@ function SignUpForm() {
     <div className='form-container sign-up-container'>
       <form onSubmit={handleOnSubmit}>
         <h1>Create Account</h1>
+        {/* These are here as potential placeholders for integration of social login connections. */}
         <div className='social-container'>
           <a href='#' className='social'>
             <i className='fab fa-facebook-f' />
