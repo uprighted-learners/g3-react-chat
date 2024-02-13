@@ -49,7 +49,7 @@ function SignUpForm() {
         <input
           type='text'
           name='firstName'
-          value={state.firstNamename}
+          value={state.firstName}
           onChange={handleChange}
           placeholder='First Name'
         />
