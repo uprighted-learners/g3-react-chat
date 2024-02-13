@@ -1,3 +1,4 @@
+import './styles.css';
 import SignInForm from './SignIn';
 import SignUpForm from './SignUp';
 
