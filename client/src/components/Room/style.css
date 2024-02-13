@@ -1,0 +1,14 @@
+.room-layout {
+  display: grid;
+  grid-template-columns: auto;
+  grid-template-rows: 10fr 1fr;
+}
+
+.chat-box {
+  display: flex;
+  width: 95vw;
+}
+
+.chat-message {
+  height: 95vh;
+}
