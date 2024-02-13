@@ -4,7 +4,7 @@ import Auth from './components/Auth';
 import React, { useState } from 'react';
 import './styles.css';
 import SignInForm from './components/SignIn';
-import SignUpForm from './components/SignIn';
+import SignUpForm from './components/SignUp';
 
 export default function App() {
   const [type, setType] = useState('signIn');
@@ -26,9 +26,7 @@ export default function App() {
           <div className='overlay'>
             <div className='overlay-panel overlay-left'>
               <h1>Welcome Back!</h1>
-              <p>
-                To keep connected with us please login with your personal info
-              </p>
+              <p>To keep connected with us please login with your info</p>
               <button
                 className='ghost'
                 id='signIn'
