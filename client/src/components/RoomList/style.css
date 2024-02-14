@@ -1,5 +1,38 @@
 .room-list {
-  background-color: azure;
+  display: flex;
+  flex-direction: column;
+  background: white;
   width: 20vw;
   height: 100vh;
+}
+
+.room {
+  margin: 5px;
+  padding: 10px;
+  border-radius: 5px;
+  box-shadow: inset -6px rgba(0, 0, 0, 0.4);
+  background-color: orangered;
+  color: white;
+}
+
+/* this button css is from Home's style.css. Consider move this style to global by making it as it own "share" component */
+button {
+  border-radius: 20px;
+  border: 1px solid #ff4b2b;
+  background-color: #ff4b2b;
+  color: #ffffff;
+  font-size: 12px;
+  font-weight: bold;
+  padding: 12px 45px;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  transition: transform 80ms ease-in;
+}
+
+button:active {
+  transform: scale(0.95);
+}
+
+button:focus {
+  outline: none;
 }

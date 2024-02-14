@@ -2,11 +2,8 @@ import './style.css';
 function RoomList() {
   return (
     <div className="room-list">
-      <ul>
-        <li class="room-item" data-room-id="1">
-          Room 1
-        </li>
-      </ul>
+      <button className="room">This is a room</button>
+      <button className="room">This is a another room</button>
     </div>
   );
 }
