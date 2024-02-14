@@ -1,0 +1,8 @@
+.profile {
+  position: relative;
+  border: 1px solid black;
+  border-radius: 5px;
+  margin-top: auto;
+  width: inherit;
+  height: 5vw;
+}
