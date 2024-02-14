@@ -1,0 +1,25 @@
+.chat-ui-layout {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+}
+.message-box {
+  color: darkslategray;
+  background-color: darkgrey;
+  border-radius: 5px;
+  width: 80rem;
+  height: 50rem;
+}
+
+.chat-box {
+  display: inline-flex;
+  flex-direction: row;
+  align-items: baseline;
+  width: inherit;
+  height: auto;
+}
+
+.chat-box input {
+  margin-right: 0 5px;
+  border-radius: 5px;
+}

@@ -1,6 +1,6 @@
 import './styles.css';
-import SignInForm from './SignIn';
-import SignUpForm from './SignUp';
+import SignInForm from '../components/Login/SignIn';
+import SignUpForm from '../components/Login/SignUp';
 
 function Login(props) {
   const containerClass = 'container ' + (props.type === 'signUp' ? 'right-panel-active' : '');

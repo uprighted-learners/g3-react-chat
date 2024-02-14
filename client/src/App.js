@@ -1,11 +1,10 @@
-import logo from './logo.svg';
+import {BrowserRouter as Router, Route, Routes} from 'react-router-dom';
 import './App.css';
 // import Auth from './components/Auth';
-import React, {useState} from 'react';
-// import './Styles.css';
+import {React, useState} from 'react';
 import Room from './components/Room';
-import Layout from './components/Layout';
-import Login from './components/Login';
+import Layout from './layout/Layout';
+import Login from './pages/Home';
 
 export default function App() {
   const [type, setType] = useState('signIn');
@@ -15,13 +14,15 @@ export default function App() {
       return;
     }
   };
+
   return (
     <div className="App">
-      <Layout>
-        {/* we should implement routing here, only one of these should be active at a time */}
-        {/* <Login type={type} handleOnClick={handleOnClick} /> */}
-        <Room />
-      </Layout>
+      <Router>
+        <Routes>
+          <Route exact path="/" element={<Login type={type} handleOnClick={handleOnClick} />} />
+          <Route path="/room" element={<Room />} />
+        </Routes>
+      </Router>
     </div>
   );
 }
