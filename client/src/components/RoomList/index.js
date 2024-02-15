@@ -1,19 +1,20 @@
 import './style.css';
 import React, {useEffect, useState} from 'react';
 
-const RoomsList = () => {
+const RoomsList = (props) => {
   const [rooms, setRooms] = useState([]);
 
   useEffect(() => {
     const fetchRooms = async () => {
       try {
-        const response = await fetch('./server/routes/api/rooms');
-        const data = await response.json();
-        setRooms(data);
+        const response = await fetch('http://localhost:3000/api/room');
+        const res = await response.json();
+        setRooms(res.data.rooms);
       } catch (error) {
         console.error('Error fetching rooms: ', error);
       }
     };
+
     fetchRooms();
   }, []);
 
