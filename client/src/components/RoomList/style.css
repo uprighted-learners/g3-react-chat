@@ -1,10 +1,18 @@
+.room-list-layout {
+  width: 15fr;
+  height: 100%;
+  overflow-y: auto;
+}
+
 .room {
-  margin: 5px;
+  margin: 1%;
   padding: 10px;
   border-radius: 5px;
   box-shadow: inset -6px rgba(0, 0, 0, 0.4);
   background-color: orangered;
   color: white;
+  width: 97%;
+  height: 10vh;
 }
 
 /* this button css is from Home's style.css. Consider move this style to global by making it as it own "share" component */

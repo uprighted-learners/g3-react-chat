@@ -1,13 +1,13 @@
 import './style.css';
 import React, {useEffect, useState} from 'react';
 
-const RoomsList = (props) => {
+const RoomsList = () => {
   const [rooms, setRooms] = useState([]);
 
   useEffect(() => {
     const fetchRooms = async () => {
       try {
-        const response = await fetch('http://localhost:3000/api/room');
+        const response = await fetch('http://localhost:8080/api/room');
         const res = await response.json();
         setRooms(res.data.rooms);
       } catch (error) {
@@ -19,8 +19,7 @@ const RoomsList = (props) => {
   }, []);
 
   return (
-    <div>
-      <h1>Rooms List</h1>
+    <div className="room-list-layout">
       {rooms.map((room) => (
         <button className="room" key={room._id}>
           {room.name}
