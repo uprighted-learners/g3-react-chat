@@ -1,0 +1,21 @@
+.chat-box {
+  display: inline-flex;
+  flex-direction: row;
+  align-items: baseline;
+  width: inherit;
+  height: auto;
+  background-color: darkgrey;
+}
+
+.chat-box input {
+  margin-right: 10px;
+  border-radius: 5px;
+}
+
+.chat-box form {
+  background-color: inherit;
+  display: flex;
+  flex-direction: row;
+  padding: 0 5px;
+  width: 100%;
+}

@@ -1,24 +1,32 @@
-import RoomList from '../../components/RoomList';
-import MessagePane from '../../components/MessagePane';
-import Profile from '../../components/Profile';
 import './style.css';
-import NavPane from '../../components/NavPane';
+import RoomList from '../../components/RoomList';
+import MessagePane from '../../layout/MessagePane';
+import Profile from '../../components/Profile';
+import NavPane from '../../layout/NavPane';
 import MessageDisplay from '../../components/MessageDisplay';
+import ChatBox from '../../components/ChatBox';
+import {useEffect, useState} from 'react';
 
 function Room() {
+  const [send, setSend] = useState([false]);
+
+  // everytime send is true, update Message display, then set it false again
+  // useEffect(() => {
+  //   if (send) {
+  //     MessageDisplay();
+  //     setSend(false);
+  //   }
+  // }, [send, setSend]);
+
   return (
     <div className="room-layout">
-      {/* room list should be on the side of MessagePane */}
       <NavPane>
         <RoomList />
         <Profile />
       </NavPane>
       <MessagePane>
         <MessageDisplay />
-        <div className="chat-box">
-          <input type="text" />
-          <button>Send</button>
-        </div>
+        <ChatBox send={send} setSend={setSend} />
       </MessagePane>
     </div>
   );
