@@ -1,10 +1,9 @@
-import logo from './logo.svg';
+import {BrowserRouter as Router, Route, Routes} from 'react-router-dom';
 import './App.css';
-import Auth from './components/Auth';
-import React, { useState } from 'react';
-import './styles.css';
-import SignInForm from './components/SignIn';
-import SignUpForm from './components/SignUp';
+// import Auth from './components/Auth';
+import {React, useState} from 'react';
+import Room from './pages/Room/index';
+import Login from './pages/Home/index';
 
 export default function App() {
   const [type, setType] = useState('signIn');
@@ -14,41 +13,14 @@ export default function App() {
       return;
     }
   };
-  const containerClass =
-    'container ' + (type === 'signUp' ? 'right-panel-active' : '');
+
+  // See https://hygraph.com/blog/routing-in-react js-using-react-router for routing explanation
   return (
-    <div className='App'>
-      <h2>Sign in/up Form</h2>
-      <div className={containerClass} id='container'>
-        <SignUpForm />
-        <SignInForm />
-        <div className='overlay-container'>
-          <div className='overlay'>
-            <div className='overlay-panel overlay-left'>
-              <h1>Welcome Back!</h1>
-              <p>To keep connected with us please login with your info</p>
-              <button
-                className='ghost'
-                id='signIn'
-                onClick={() => handleOnClick('signIn')}
-              >
-                Sign In
-              </button>
-            </div>
-            <div className='overlay-panel overlay-right'>
-              <h1>Hello, Friend!</h1>
-              <p>Enter your personal details and start journey with us</p>
-              <button
-                className='ghost '
-                id='signUp'
-                onClick={() => handleOnClick('signUp')}
-              >
-                Sign Up
-              </button>
-            </div>
-          </div>
-        </div>
-      </div>
+    <div>
+      <Routes>
+        <Route exact path="/" element={<Login type={type} handleOnClick={handleOnClick} />} />
+        <Route path="/room" element={<Room />} />
+      </Routes>
     </div>
   );
 }

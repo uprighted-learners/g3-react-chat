@@ -1,0 +1,22 @@
+.room-layout {
+  display: flex;
+  flex-direction: row;
+  max-width: 100vw;
+  max-height: 100dvh;
+  margin: auto;
+  justify-content: center;
+  align-items: center;
+}
+
+.chat-box {
+  display: inline-flex;
+  flex-direction: row;
+  align-items: baseline;
+  width: inherit;
+  height: auto;
+}
+
+.chat-box input {
+  margin-right: 0 5px;
+  border-radius: 5px;
+}

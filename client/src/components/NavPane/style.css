@@ -1,0 +1,7 @@
+.nav-layout {
+  display: flex;
+  flex-direction: column;
+  background: white;
+  width: 15fr;
+  height: 100vh;
+}
