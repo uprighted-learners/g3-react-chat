@@ -1,9 +1,5 @@
-<<<<<<< HEAD
 import React from 'react';
 import {useNavigate} from 'react-router-dom';
-=======
-import React from 'react'
->>>>>>> 9bf981fc1f0a29f4a2046b262d6a35e6540fc4e6
 
 function SignInForm() {
   const [state, setState] = React.useState({
