@@ -1,30 +1,31 @@
-import React from 'react';
+import React from 'react'
+
 function SignInForm() {
   const [state, setState] = React.useState({
     email: '',
     password: '',
-  });
+  })
   const handleChange = (evt) => {
-    const value = evt.target.value;
+    const value = evt.target.value
     setState({
       ...state,
       [evt.target.name]: value,
-    });
-  };
+    })
+  }
 
   const handleOnSubmit = (evt) => {
-    evt.preventDefault();
+    evt.preventDefault()
 
-    const { email, password } = state;
-    alert(`You are login with email: ${email} and password: ${password}`);
+    const { email, password } = state
+    alert(`You are login with email: ${email} and password: ${password}`)
 
     for (const key in state) {
       setState({
         ...state,
         [key]: '',
-      });
+      })
     }
-  };
+  }
 
   return (
     <div className='form-container sign-in-container'>
@@ -60,7 +61,7 @@ function SignInForm() {
         <button>Sign In</button>
       </form>
     </div>
-  );
+  )
 }
 
-export default SignInForm;
+export default SignInForm
