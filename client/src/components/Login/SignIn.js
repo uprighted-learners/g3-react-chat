@@ -1,9 +1,13 @@
 import React from 'react';
+import {useNavigate} from 'react-router-dom';
+
 function SignInForm() {
   const [state, setState] = React.useState({
     email: '',
     password: '',
   });
+  const navigate = useNavigate();
+
   const handleChange = (evt) => {
     const value = evt.target.value;
     setState({
@@ -27,8 +31,12 @@ function SignInForm() {
 
       const res = await response.json();
       if (response.ok) {
+        // login successed
+        localStorage.setItem('userInfo', JSON.stringify(response));
         alert(res.message);
+        navigate('/room');
       } else {
+        // login failed
         alert(res.message);
       }
     } catch (error) {
