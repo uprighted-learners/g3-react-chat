@@ -1,16 +1,17 @@
-import React from 'react';
+import React from 'react'
+
 function SignInForm() {
   const [state, setState] = React.useState({
     email: '',
     password: '',
-  });
+  })
   const handleChange = (evt) => {
-    const value = evt.target.value;
+    const value = evt.target.value
     setState({
       ...state,
       [evt.target.name]: value,
-    });
-  };
+    })
+  }
 
   const handleOnSubmit = async (evt) => {
     evt.preventDefault();
@@ -35,14 +36,13 @@ function SignInForm() {
       console.log(error);
       alert(error.message);
     }
-
     for (const key in state) {
       setState({
         ...state,
         [key]: '',
-      });
+      })
     }
-  };
+  }
 
   return (
     <div className="form-container sign-in-container">
@@ -66,7 +66,7 @@ function SignInForm() {
         <button>Sign In</button>
       </form>
     </div>
-  );
+  )
 }
 
-export default SignInForm;
+export default SignInForm
