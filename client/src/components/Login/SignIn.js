@@ -9,17 +9,18 @@ function SignInForm() {
   const navigate = useNavigate();
 
   const handleChange = (evt) => {
-    const value = evt.target.value
+    const value = evt.target.value;
     setState({
       ...state,
       [evt.target.name]: value,
-    })
-  }
+    });
+  };
 
   const handleOnSubmit = async (evt) => {
     evt.preventDefault();
 
     const {email, password} = state;
+    // TODO: check if token exists in local storage and redirect to dashboard page if it does
     try {
       const response = await fetch('http://localhost:8080/userAuth/login', {
         method: 'POST',
@@ -27,6 +28,7 @@ function SignInForm() {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({email, password}),
+        // TODO: if token exist send token as part of request
       });
 
       const res = await response.json();
@@ -47,9 +49,9 @@ function SignInForm() {
       setState({
         ...state,
         [key]: '',
-      })
+      });
     }
-  }
+  };
 
   return (
     <div className="form-container sign-in-container">
@@ -73,7 +75,7 @@ function SignInForm() {
         <button>Sign In</button>
       </form>
     </div>
-  )
+  );
 }
 
-export default SignInForm
+export default SignInForm;
