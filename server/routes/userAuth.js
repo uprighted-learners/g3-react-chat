@@ -1,40 +1,36 @@
-require('dotenv').config()
-const sendErrorResponse = require('../utils/errorHandler')
-const router = require('express').Router()
-const User = require('../models/Users')
-const bcryptjs = require('bcryptjs')
-const jwt = require('jsonwebtoken')
-const checkMissingFields = require('./middleware/checkMissingFields')
-const SALT = 10
-const JWT_KEY = process.env.JWT_KEY
+require('dotenv').config();
+const sendErrorResponse = require('../utils/errorHandler');
+const router = require('express').Router();
+const User = require('../models/Users');
+const bcryptjs = require('bcryptjs');
+const jwt = require('jsonwebtoken');
+const checkMissingFields = require('./middleware/checkMissingFields');
+const SALT = 10;
+const JWT_KEY = process.env.JWT_KEY;
 
-router.post(
-  '/register',
-  checkMissingFields('firstName', 'lastName', 'email', 'password'),
-  async (req, res) => {
-    try {
-      const { firstName, lastName, email, password } = req.body
+router.post('/register', checkMissingFields('firstName', 'lastName', 'email', 'password'), async (req, res) => {
+  try {
+    const {firstName, lastName, email, password} = req.body;
 
-      const newUser = await User.create({
-        firstName,
-        lastName,
-        email,
-        password: bcryptjs.hashSync(password, SALT),
-      })
+    const newUser = await User.create({
+      firstName,
+      lastName,
+      email,
+      password: bcryptjs.hashSync(password, SALT),
+    });
 
-      const token = createUserToken(newUser)
-      res.status(201).json({
-        success: true,
-        data: {
-          newUser,
-          token,
-        },
-      })
-    } catch (error) {
-      sendErrorResponse(error, res)
-    }
-  },
-)
+    const token = createUserToken(newUser);
+    res.status(201).json({
+      success: true,
+      data: {
+        newUser,
+        token,
+      },
+    });
+  } catch (error) {
+    sendErrorResponse(error, res);
+  }
+});
 
 router.post('/login', checkMissingFields('email', 'password'), async (req, res) => {
   try {
@@ -57,14 +53,16 @@ router.post('/login', checkMissingFields('email', 'password'), async (req, res) 
         token,
       });
     }
-  },
-)
+  } catch (error) {
+    sendErrorResponse(error, res);
+  }
+});
 
-module.exports = router
+module.exports = router;
 
 function createUserToken(user) {
-  const token = jwt.sign({ _id: user._id }, JWT_KEY, {
+  const token = jwt.sign({_id: user._id}, JWT_KEY, {
     expiresIn: 60 * 60 * 24,
-  })
-  return token
+  });
+  return token;
 }
