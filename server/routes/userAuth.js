@@ -32,7 +32,7 @@ router.post('/register', checkMissingFields('firstName', 'lastName', 'email', 'p
   }
 });
 
-router.get('/login', checkMissingFields('email', 'password'), async (req, res) => {
+router.post('/login', checkMissingFields('email', 'password'), async (req, res) => {
   try {
     const {email, password} = req.body;
 
@@ -49,6 +49,7 @@ router.get('/login', checkMissingFields('email', 'password'), async (req, res) =
       return res.status(200).json({
         success: true,
         message: 'Login successful',
+        userId: foundUser.userId,
         token,
       });
     }
