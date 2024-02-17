@@ -32,9 +32,9 @@ function SignInForm() {
       });
 
       const res = await response.json();
-      if (response.ok) {
+      if (res.success == true) {
         // login successed
-        localStorage.setItem('userInfo', JSON.stringify(response));
+        localStorage.setItem('userInfo', JSON.stringify(res));
         alert(res.message);
         navigate('/room');
       } else {

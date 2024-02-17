@@ -5,4 +5,7 @@
   margin-top: auto;
   width: inherit;
   height: 5vw;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }

@@ -1,7 +1,9 @@
 import './style.css';
 
 function Profile() {
-  return <div className="profile">Profile here</div>;
+  let data = localStorage.getItem('userInfo');
+  data = JSON.parse(data);
+  return <div className="profile">{data.user.firstName + ' ' + data.user.lastName}</div>;
 }
 
 export default Profile;
