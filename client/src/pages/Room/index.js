@@ -8,15 +8,15 @@ import ChatBox from '../../components/ChatBox';
 import {useEffect, useState} from 'react';
 
 function Room() {
-  const [send, setSend] = useState([false]);
+  // every time send is true, update the messages state with the new message,
+  // then set send to false again
+  const [send, setSend] = useState(false);
 
-  // everytime send is true, update Message display, then set it false again
-  // useEffect(() => {
-  //   if (send) {
-  //     MessageDisplay();
-  //     setSend(false);
-  //   }
-  // }, [send, setSend]);
+  useEffect(() => {
+    if (send) {
+      setSend(false);
+    }
+  }, [send, setSend]);
 
   return (
     <div className="room-layout">
@@ -25,8 +25,8 @@ function Room() {
         <Profile />
       </NavPane>
       <MessagePane>
-        <MessageDisplay />
-        <ChatBox send={send} setSend={setSend} />
+        <MessageDisplay send={send} />
+        <ChatBox setSend={setSend} />
       </MessagePane>
     </div>
   );

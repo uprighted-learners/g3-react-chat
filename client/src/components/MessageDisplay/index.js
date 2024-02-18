@@ -1,8 +1,9 @@
 import './style.css';
-import React, {useEffect, useState} from 'react';
+import React, {useEffect, useState, useRef} from 'react';
 
-const MessageDisplay = () => {
+const MessageDisplay = (props) => {
   const [messages, setMessages] = useState([]);
+  const messageDisplayRef = useRef(null);
 
   useEffect(() => {
     const fetchmessage = async () => {
@@ -16,17 +17,25 @@ const MessageDisplay = () => {
     };
     // TODO: only fetch message for the current room
     fetchmessage();
-  }, []);
+  }, [props.send]);
+
+  useEffect(() => {
+    if (messageDisplayRef.current) {
+      messageDisplayRef.current.scrollTop = messageDisplayRef.current.scrollHeight;
+    }
+  }, [messages]);
 
   return (
-    <div className="message-display">
-      {messages.map((message) => (
-        <p className="message" key={message._id}>
-          User: {message._id}
-          <br />
-          {message.message}
-        </p>
-      ))}
+    <div className="room-layout">
+      <div className="message-display" ref={messageDisplayRef}>
+        {messages.map((message) => (
+          <p className="message" key={message._id}>
+            User: {message.userId}
+            <br />
+            {message.message}
+          </p>
+        ))}
+      </div>
     </div>
   );
 };

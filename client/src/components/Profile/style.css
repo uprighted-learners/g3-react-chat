@@ -1,10 +1,13 @@
 .profile {
-  position: sticky;
+  position: absolute;
+  bottom: 0;
   border: 1px solid black;
   border-radius: 5px;
   margin-top: auto;
   width: inherit;
-  height: 5vw;
+  height: 10vh;
+  position: relative;
+  bottom: 0;
   display: flex;
   justify-content: center;
   align-items: center;

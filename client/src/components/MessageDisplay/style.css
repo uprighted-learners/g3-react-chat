@@ -1,12 +1,11 @@
 .message-display {
   color: darkslategray;
   width: 90vw;
-  height: 100%;
+  height: 90vh;
   margin-top: auto;
+  overflow-y: scroll;
   display: flex;
   flex-direction: column;
-  justify-content: flex-end;
-  overflow-y: auto;
 }
 
 .message {

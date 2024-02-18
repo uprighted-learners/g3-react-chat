@@ -5,6 +5,8 @@
   width: inherit;
   height: auto;
   background-color: darkgrey;
+  position: relative;
+  bottom: 0;
 }
 
 .chat-box input {
