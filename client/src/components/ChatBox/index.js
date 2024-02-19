@@ -5,7 +5,7 @@ function ChatBox(props) {
     evt.preventDefault();
 
     const userId = JSON.parse(localStorage.getItem('userInfo')).user._id;
-    const roomId = JSON.parse(localStorage.getItem('roomInfo')).room._id;
+    const roomId = JSON.parse(localStorage.getItem('roomInfo'))._id;
     const message = evt.target.userMessage.value;
     try {
       const response = await fetch('http://localhost:8080/api/message/create', {

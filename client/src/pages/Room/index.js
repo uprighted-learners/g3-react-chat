@@ -5,6 +5,7 @@ import Profile from '../../components/Profile';
 import NavPane from '../../layout/NavPane';
 import MessageDisplay from '../../components/MessageDisplay';
 import ChatBox from '../../components/ChatBox';
+import RoomName from '../../components/RoomName';
 import {useEffect, useState} from 'react';
 
 function Room() {
@@ -12,7 +13,6 @@ function Room() {
   const [send, setSend] = useState(false);
   const [messagesData, setMessagesData] = useState([]);
   const [rooms, setRooms] = useState([]);
-  const [currentRoom, setCurrentRoom] = useState();
 
   async function fetchMessage(roomId) {
     // fetch messages based on room
@@ -47,7 +47,9 @@ function Room() {
 
   async function selectRoom(room) {
     setIsLoading(true);
-    setCurrentRoom(room);
+    // change background of button
+    // TODO: remove user from previous room and add user to selected room
+    localStorage.setItem('roomInfo', JSON.stringify(room));
   }
 
   async function addAllRooms() {
@@ -65,6 +67,7 @@ function Room() {
     // set up
     const setup = async () => {
       const roomsData = await fetchRooms('');
+      // default room is at index 0
       selectRoom(roomsData[0]);
     };
     setup();
@@ -73,11 +76,12 @@ function Room() {
   return (
     <div className="room-layout">
       <NavPane>
-        <RoomList selectRoom={selectRoom} addAllRooms={addAllRooms} rooms={rooms} fetchRooms={fetchRooms} currentRoom={currentRoom} />
+        <RoomList selectRoom={selectRoom} addAllRooms={addAllRooms} rooms={rooms} fetchRooms={fetchRooms} />
         <Profile />
       </NavPane>
       <MessagePane>
-        <MessageDisplay send={send} messagesData={messagesData} setMessagesData={setMessagesData} fetchMessage={fetchMessage} fetchUser={fetchUser} currentRoom={currentRoom} isLoading={isLoading} setIsLoading={setIsLoading} />
+        <RoomName />
+        <MessageDisplay send={send} messagesData={messagesData} setMessagesData={setMessagesData} fetchMessage={fetchMessage} fetchUser={fetchUser} isLoading={isLoading} setIsLoading={setIsLoading} />
         <ChatBox setSend={setSend} />
       </MessagePane>
     </div>

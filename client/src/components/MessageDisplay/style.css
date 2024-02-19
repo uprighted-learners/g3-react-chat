@@ -1,8 +1,9 @@
 .message-display {
   color: darkslategray;
   width: 90vw;
-  height: 90vh;
+  height: 88vh;
   margin-top: auto;
+  margin-bottom: -5vh;
   overflow-y: scroll;
   display: flex;
   flex-direction: column;

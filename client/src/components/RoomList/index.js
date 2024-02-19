@@ -9,7 +9,13 @@ const RoomsList = (props) => {
   return (
     <div className="room-list-layout">
       {props.rooms.map((room) => (
-        <button className="room" key={room._id} onClick={()=>{props.selectRoom(room)}}>
+        <button
+          className="room"
+          key={room._id}
+          onClick={() => {
+            props.selectRoom(room);
+          }}
+        >
           {room.name}
         </button>
       ))}
