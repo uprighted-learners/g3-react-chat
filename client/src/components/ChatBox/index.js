@@ -18,6 +18,7 @@ function ChatBox(props) {
       const res = await response.json();
       if (res.success === true) {
         props.setSend(true);
+        evt.target.userMessage.value = '';
       } else {
         alert(res.message);
       }

@@ -2,39 +2,53 @@ import './style.css';
 import React, {useEffect, useState, useRef} from 'react';
 
 const MessageDisplay = (props) => {
-  const [messages, setMessages] = useState([]);
+  // const [isLoading, setIsLoading] = useState(true);
   const messageDisplayRef = useRef(null);
 
   useEffect(() => {
-    const fetchmessage = async () => {
+    const addUserName = async () => {
       try {
-        const response = await fetch('http://localhost:8080/api/message');
-        const res = await response.json();
-        setMessages(res.data.message);
+        let fetchedMessages = await props.fetchMessage(props.currentRoom._id);
+        console.log(props.currentRoom._id);
+        const promises = fetchedMessages.message.map(async (messageInfo) => {
+          const userName = await props.fetchUser(messageInfo.userId);
+          messageInfo.userName = userName;
+        });
+
+        await Promise.all(promises);
+        props.setMessagesData(fetchedMessages);
+        props.setIsLoading(false);
       } catch (error) {
-        console.error('Error fetching message: ', error);
+        console.error(error);
       }
     };
+    addUserName();
     // TODO: only fetch message for the current room
-    fetchmessage();
-  }, [props.send]);
+  }, [props.send, props.currentRoom]);
 
   useEffect(() => {
+    // scroll to bottom when messages change
     if (messageDisplayRef.current) {
       messageDisplayRef.current.scrollTop = messageDisplayRef.current.scrollHeight;
     }
-  }, [messages]);
+  }, [props.messagesData]);
 
   return (
     <div className="room-layout">
       <div className="message-display" ref={messageDisplayRef}>
-        {messages.map((message) => (
-          <p className="message" key={message._id}>
-            User: {message.userId}
-            <br />
-            {message.message}
-          </p>
-        ))}
+        {props.isLoading ? (
+          <p>Loading...</p>
+        ) : props.messagesData.message.length === 0 ? (
+          <p>No messages yet.</p>
+        ) : (
+          // console.log(props.messagesData)
+          props.messagesData.message.map((body) => (
+            <div className="message" key={body._id}>
+              <div className="name">{body.userName}</div>
+              <div className="text">{body.message}</div>
+            </div>
+          ))
+        )}
       </div>
     </div>
   );

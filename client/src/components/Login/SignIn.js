@@ -32,7 +32,7 @@ function SignInForm() {
       });
 
       const res = await response.json();
-      if (res.success == true) {
+      if (res.success === true) {
         // login successed
         localStorage.setItem('userInfo', JSON.stringify(res));
         alert(res.message);

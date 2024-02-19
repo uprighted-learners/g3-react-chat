@@ -20,6 +20,21 @@ router.get('/', async (req, res) => {
   }
 });
 
+router.get('/:roomId', async (req, res) => {
+  try {
+    const roomId = req.params.roomId;
+    const message = await Message.find({roomId: roomId});
+    res.status(200).json({
+      success: true,
+      data: {
+        message,
+      },
+    });
+  } catch (error) {
+    sendErrorResponse(error, res);
+  }
+});
+
 router.post('/create', checkMissingFields('userId', 'roomId', 'message'), async (req, res) => {
   try {
     const {userId, roomId, message} = req.body;

@@ -1,32 +1,20 @@
-import './style.css'
-import React, { useEffect, useState } from 'react'
+import './style.css';
+import React, {useEffect} from 'react';
 
-const RoomsList = () => {
-  const [rooms, setRooms] = useState([])
-
+const RoomsList = (props) => {
   useEffect(() => {
-    const fetchRooms = async () => {
-      try {
-        const response = await fetch('http://localhost:8080/api/room')
-        const res = await response.json()
-        setRooms(res.data.rooms)
-      } catch (error) {
-        console.error('Error fetching rooms: ', error)
-      }
-    }
-
-    fetchRooms()
-  }, [])
+    props.addAllRooms();
+  }, []);
 
   return (
-    <div className='room-list-layout'>
-      {rooms.map((room) => (
-        <button className='room' key={room._id}>
+    <div className="room-list-layout">
+      {props.rooms.map((room) => (
+        <button className="room" key={room._id} onClick={()=>{props.selectRoom(room)}}>
           {room.name}
         </button>
       ))}
     </div>
-  )
-}
+  );
+};
 
-export default RoomsList
+export default RoomsList;
