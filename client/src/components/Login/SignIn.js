@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import {useNavigate} from 'react-router-dom';
 
 function SignInForm() {
@@ -20,7 +20,6 @@ function SignInForm() {
     evt.preventDefault();
 
     const {email, password} = state;
-    // TODO: check if token exists in local storage and redirect to dashboard page if it does
     try {
       const response = await fetch('http://localhost:8080/userAuth/login', {
         method: 'POST',
@@ -28,7 +27,6 @@ function SignInForm() {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({email, password}),
-        // TODO: if token exist send token as part of request
       });
 
       const res = await response.json();
@@ -52,6 +50,16 @@ function SignInForm() {
       });
     }
   };
+
+  useEffect(() => {
+    const userInfo = localStorage.getItem('userInfo');
+    if (userInfo) {
+      const {token} = JSON.parse(userInfo);
+      if (token) {
+        navigate('/room');
+      }
+    }
+  }, []);
 
   return (
     <div className="form-container sign-in-container">

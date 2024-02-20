@@ -3,6 +3,7 @@ import React, {useEffect} from 'react';
 
 const RoomsList = (props) => {
   useEffect(() => {
+    // TODO: fetch all rooms that user has access to
     props.addAllRooms();
   }, []);
 

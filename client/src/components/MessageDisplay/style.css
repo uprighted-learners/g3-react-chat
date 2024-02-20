@@ -10,21 +10,6 @@
   scrollbar-width: thin;
 }
 
-.message {
-  margin: 5px;
-  background-color: lightgray;
-  border-radius: 5px;
-}
-
-.message .name {
-  margin: 10px;
-  font-weight: bold;
-}
-
-.message .text {
-  margin: 10px;
-}
-
 .message-display p {
   display: flex;
   justify-content: center;

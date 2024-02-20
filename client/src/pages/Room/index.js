@@ -7,8 +7,10 @@ import MessageDisplay from '../../components/MessageDisplay';
 import ChatBox from '../../components/ChatBox';
 import RoomName from '../../components/RoomName';
 import {useEffect, useState} from 'react';
+import {useNavigate} from 'react-router-dom';
 
 function Room() {
+  const navigate = useNavigate();
   const [isLoading, setIsLoading] = useState(true);
   const [send, setSend] = useState(false);
   const [messagesData, setMessagesData] = useState([]);
@@ -47,7 +49,6 @@ function Room() {
 
   async function selectRoom(room) {
     setIsLoading(true);
-    // change background of button
     // TODO: remove user from previous room and add user to selected room
     localStorage.setItem('roomInfo', JSON.stringify(room));
   }
@@ -57,13 +58,18 @@ function Room() {
     setRooms(roomsData);
   }
 
+  function logout() {
+    localStorage.clear();
+    navigate('/');
+  }
+
   useEffect(() => {
     if (send) {
       setSend(false);
     }
   }, [send, setSend]);
 
-  useState(() => {
+  useEffect(() => {
     // set up
     const setup = async () => {
       const roomsData = await fetchRooms('');
@@ -71,16 +77,16 @@ function Room() {
       selectRoom(roomsData[0]);
     };
     setup();
-  });
+  }, []);
 
   return (
     <div className="room-layout">
       <NavPane>
         <RoomList selectRoom={selectRoom} addAllRooms={addAllRooms} rooms={rooms} fetchRooms={fetchRooms} />
-        <Profile />
+        <Profile handleLogout={logout} />
       </NavPane>
       <MessagePane>
-        <RoomName />
+        <RoomName selectRoom={selectRoom} />
         <MessageDisplay send={send} messagesData={messagesData} setMessagesData={setMessagesData} fetchMessage={fetchMessage} fetchUser={fetchUser} isLoading={isLoading} setIsLoading={setIsLoading} />
         <ChatBox setSend={setSend} />
       </MessagePane>

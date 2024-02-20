@@ -1,0 +1,30 @@
+.message {
+  margin: 5px;
+  background-color: lightgray;
+  border-radius: 5px;
+}
+
+.message .name {
+  margin: 10px;
+  font-weight: bold;
+  display: flex;
+  justify-content: space-between;
+}
+
+.message .text {
+  margin: 10px;
+}
+
+.name button {
+  padding: 3px 5px;
+  margin: 0 3px;
+  height: min-content;
+  width: min-content;
+  font-size: 12px;
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+
+.name:hover button {
+  opacity: 1;
+}

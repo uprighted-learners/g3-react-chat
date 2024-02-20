@@ -56,9 +56,9 @@ router.post('/create', checkMissingFields('userId', 'roomId', 'message'), async 
   }
 });
 
-router.delete('/delete', isAdmin, checkMissingFields('messageId'), async (req, res) => {
+router.delete(`/delete/:messageId`, async (req, res) => {
   try {
-    const messageId = req.body.messageId;
+    const messageId = req.params.messageId;
 
     if (!mongoose.Types.ObjectId.isValid(messageId)) {
       return res.status(400).json({

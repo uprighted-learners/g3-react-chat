@@ -1,6 +1,4 @@
 .profile {
-  position: absolute;
-  bottom: 0;
   border: 1px solid black;
   border-radius: 5px;
   margin-top: auto;
@@ -11,4 +9,11 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  flex-direction: column;
+}
+
+.profile button {
+  margin: 5px;
+  padding: 5px;
+  cursor: pointer;
 }

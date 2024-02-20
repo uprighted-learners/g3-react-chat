@@ -1,8 +1,10 @@
 import './style.css';
-import React, {useEffect, useRef} from 'react';
+import React, {useEffect, useState, useRef} from 'react';
+import MessageList from '../MessageList';
 
 const MessageDisplay = (props) => {
   const messageDisplayRef = useRef(null);
+  const [refresh, setRefresh] = useState(false);
 
   useEffect(() => {
     const addUserName = async () => {
@@ -21,7 +23,7 @@ const MessageDisplay = (props) => {
       }
     };
     addUserName();
-  }, [props.send, localStorage.getItem('roomInfo')]);
+  }, [props.send, localStorage.getItem('roomInfo'), refresh]);
 
   useEffect(() => {
     // scroll to bottom when messages change
@@ -33,18 +35,7 @@ const MessageDisplay = (props) => {
   return (
     <div className="room-layout">
       <div className="message-display" ref={messageDisplayRef}>
-        {props.isLoading ? (
-          <p>Loading...</p>
-        ) : props.messagesData.message.length === 0 ? (
-          <p>No messages yet.</p>
-        ) : (
-          props.messagesData.message.map((body) => (
-            <div className="message" key={body._id}>
-              <div className="name">{body.userName}</div>
-              <div className="text">{body.message}</div>
-            </div>
-          ))
-        )}
+        {props.isLoading ? <p>Loading...</p> : props.messagesData.message.length === 0 ? <p>No messages yet.</p> : <MessageList messages={props.messagesData.message} setRefresh={setRefresh} />}
       </div>
     </div>
   );
