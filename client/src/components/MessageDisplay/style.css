@@ -6,7 +6,7 @@
   margin-bottom: -5vh;
   overflow-y: scroll;
   display: flex;
-  flex-direction: column;
+  flex-direction: column-reverse;
   scrollbar-width: thin;
 }
 

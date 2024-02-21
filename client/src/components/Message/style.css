@@ -1,4 +1,5 @@
-.message {
+.message,
+.modify {
   margin: 5px;
   background-color: lightgray;
   border-radius: 5px;
@@ -27,4 +28,19 @@
 
 .name:hover button {
   opacity: 1;
+}
+
+.message form {
+  display: flex;
+  justify-content: center;
+  flex-direction: row;
+  height: fit-content;
+}
+
+.message form button {
+  margin: 5px;
+  padding: 5px;
+  border-radius: 5px;
+  background-color: orangered;
+  transition: background-color 0.3s;
 }

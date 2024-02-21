@@ -1,15 +1,15 @@
 import './style.css';
+import {useState} from 'react';
+import MessageForm from '../MessageForm';
 function Message(props) {
-  const handleEdit = async (id) => {
-    // TODO: edit message
-  };
+  const [isEditing, setIsEditing] = useState(false);
+  const [newMessage, setNewMessage] = useState(props.body.message);
 
   const handleDelete = async (id) => {
-    // TODO: delete message by id then refetch messages
     await fetch(`http://localhost:8080/api/message/delete/${id}`, {
       method: 'DELETE',
     });
-    props.setRefresh((prev) => !prev);
+    props.setRefresh((refresh) => !refresh);
   };
 
   return (
@@ -17,15 +17,11 @@ function Message(props) {
       <div className="name">
         {props.body.userName}
         <div className="modify">
-          <button className="edit" onClick={() => handleEdit(props.body._id)}>
-            Edit
-          </button>
-          <button className="delete" onClick={() => handleDelete(props.body._id)}>
-            Delete
-          </button>
+          <button onClick={() => setIsEditing(true)}>Edit</button>
+          <button onClick={() => handleDelete(props.body._id)}>Delete</button>
         </div>
       </div>
-      <div className="text">{props.body.message}</div>
+      {isEditing ? <MessageForm newMessage={newMessage} setNewMessage={setNewMessage} setIsEditing={setIsEditing} message={props.body.message} messageId={props.body._id} setRefresh={props.setRefresh} /> : <div className="text">{props.body.message}</div>}
     </div>
   );
 }

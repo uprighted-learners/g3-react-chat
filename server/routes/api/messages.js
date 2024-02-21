@@ -23,7 +23,7 @@ router.get('/', async (req, res) => {
 router.get('/:roomId', async (req, res) => {
   try {
     const roomId = req.params.roomId;
-    const message = await Message.find({roomId: roomId});
+    const message = await Message.find({roomId: roomId}).sort({createdAt: -1}).limit(20);
     res.status(200).json({
       success: true,
       data: {
@@ -91,11 +91,11 @@ router.delete(`/delete/:messageId`, async (req, res) => {
   }
 });
 
-router.patch('/update', isAdmin, checkMissingFields('messageId', 'newMessage'), async (req, res) => {
+router.patch('/update', checkMissingFields('user, messageId', 'newMessage'), isAdmin, async (req, res) => {
   try {
     const {messageId, newMessage} = req.body;
 
-    const foundMessage = await Message.findOneAndUpdate({_id: messageId}, {message: newMessage});
+    const foundMessage = await Message.findOneAndUpdate({_id: messageId}, {message: newMessage}, {new: true});
 
     if (!foundMessage) {
       return res.status(404).json({

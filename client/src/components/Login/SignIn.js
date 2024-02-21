@@ -1,8 +1,8 @@
-import React, {useEffect} from 'react';
+import React, {useEffect, useState} from 'react';
 import {useNavigate} from 'react-router-dom';
 
 function SignInForm() {
-  const [state, setState] = React.useState({
+  const [state, setState] = useState({
     email: '',
     password: '',
   });
