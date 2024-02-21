@@ -1,25 +1,31 @@
-import logo from './logo.svg';
-import './App.css';
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom'
+import './App.css'
+// import Auth from './components/Auth';
+import { React, useState } from 'react'
+import Room from './pages/Room/index'
+import Login from './pages/Home/index'
 
-function App() {
+export default function App() {
+  const [type, setType] = useState('signIn')
+
+  const handleOnClick = (text) => {
+    if (text !== type) {
+      setType(text)
+      return
+    }
+  }
+
+  // See https://hygraph.com/blog/routing-in-react js-using-react-router for routing explanation
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div>
+      <Routes>
+        <Route
+          exact
+          path='/'
+          element={<Login type={type} handleOnClick={handleOnClick} />}
+        />
+        <Route path='/room' element={<Room />} />
+      </Routes>
     </div>
-  );
+  )
 }
-
-export default App;
