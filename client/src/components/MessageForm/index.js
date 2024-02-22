@@ -3,7 +3,7 @@ function MessageForm(props) {
     evt.preventDefault();
     const newMessage = evt.target.newMessage.value;
     const messageId = props.messageId;
-    const user = JSON.parse(localStorage.getItem('userInfo'));
+    const user = JSON.parse(localStorage.getItem('userInfo')).user;
     try {
       const response = await fetch('http://localhost:8080/api/message/update', {
         method: 'PATCH',
@@ -12,11 +12,13 @@ function MessageForm(props) {
         },
         body: JSON.stringify({user, messageId, newMessage}),
       });
-      if (!response.ok) {
-        alert(response.message);
+
+      const res = await response.json();
+      if (!res.ok) {
+        alert(res.message);
       }
       // Bug: response should give status 403 if user is not an admin
-      console.log(response);
+      console.log(res);
       console.log(newMessage, messageId);
       console.log(user);
       props.setRefresh((refresh) => !refresh);

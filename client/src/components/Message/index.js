@@ -5,11 +5,17 @@ function Message(props) {
   const [isEditing, setIsEditing] = useState(false);
   const [newMessage, setNewMessage] = useState(props.body.message);
 
+  // NOTE: you should not be able to delete other people's messages
   const handleDelete = async (id) => {
-    await fetch(`http://localhost:8080/api/message/delete/${id}`, {
-      method: 'DELETE',
-    });
-    props.setRefresh((refresh) => !refresh);
+    const userInfo = JSON.parse(localStorage.getItem('userInfo')).user;
+    if (userInfo.isAdmin === true || props.body.userId === userInfo._id) {
+      await fetch(`http://localhost:8080/api/message/delete/${id}`, {
+        method: 'DELETE',
+      });
+      props.setRefresh((refresh) => !refresh);
+    } else {
+      return alert("You cannot delete other people's messages");
+    }
   };
 
   return (

@@ -91,7 +91,7 @@ router.delete(`/delete/:messageId`, async (req, res) => {
   }
 });
 
-router.patch('/update', checkMissingFields('user', 'messageId', 'newMessage'), isAdmin, async (req, res) => {
+router.patch('/update', checkMissingFields('messageId', 'newMessage'), isAdmin, async (req, res) => {
   try {
     const {messageId, newMessage} = req.body;
     const foundMessage = await Message.findOneAndUpdate({_id: messageId}, {message: newMessage});
