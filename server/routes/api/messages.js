@@ -20,6 +20,21 @@ router.get('/', async (req, res) => {
   }
 });
 
+router.get('/:roomId', async (req, res) => {
+  try {
+    const roomId = req.params.roomId;
+    const message = await Message.find({roomId: roomId}).sort({createdAt: -1}).limit(20);
+    res.status(200).json({
+      success: true,
+      data: {
+        message,
+      },
+    });
+  } catch (error) {
+    sendErrorResponse(error, res);
+  }
+});
+
 router.post('/create', checkMissingFields('userId', 'roomId', 'message'), async (req, res) => {
   try {
     const {userId, roomId, message} = req.body;
@@ -41,9 +56,9 @@ router.post('/create', checkMissingFields('userId', 'roomId', 'message'), async 
   }
 });
 
-router.delete('/delete', isAdmin, checkMissingFields('messageId'), async (req, res) => {
+router.delete(`/delete/:messageId`, async (req, res) => {
   try {
-    const messageId = req.body.messageId;
+    const messageId = req.params.messageId;
 
     if (!mongoose.Types.ObjectId.isValid(messageId)) {
       return res.status(400).json({
@@ -76,10 +91,9 @@ router.delete('/delete', isAdmin, checkMissingFields('messageId'), async (req, r
   }
 });
 
-router.patch('/update', isAdmin, checkMissingFields('messageId', 'newMessage'), async (req, res) => {
+router.patch('/update', checkMissingFields('messageId', 'newMessage'), isAdmin, async (req, res) => {
   try {
     const {messageId, newMessage} = req.body;
-
     const foundMessage = await Message.findOneAndUpdate({_id: messageId}, {message: newMessage});
 
     if (!foundMessage) {

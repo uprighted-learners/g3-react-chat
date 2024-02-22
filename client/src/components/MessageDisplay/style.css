@@ -1,17 +1,16 @@
 .message-display {
   color: darkslategray;
-  background-color: darkgrey;
-  border-radius: 5px;
   width: 90vw;
-  height: 100%;
+  height: 88vh;
   margin-top: auto;
+  margin-bottom: -5vh;
+  overflow-y: scroll;
   display: flex;
-  flex-direction: column;
-  justify-content: flex-end;
+  flex-direction: column-reverse;
+  scrollbar-width: thin;
 }
 
-.message {
-  margin: 5px;
-  background-color: lightgray;
-  border-radius: 5px;
+.message-display p {
+  display: flex;
+  justify-content: center;
 }

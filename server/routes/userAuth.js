@@ -49,7 +49,7 @@ router.post('/login', checkMissingFields('email', 'password'), async (req, res) 
       return res.status(200).json({
         success: true,
         message: 'Login successful',
-        userId: foundUser.userId,
+        user: foundUser,
         token,
       });
     }

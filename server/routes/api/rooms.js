@@ -6,9 +6,15 @@ const router = Router();
 const sendErrorResponse = require('../../utils/errorHandler');
 const checkMissingFields = require('../middleware/checkMissingFields');
 
-router.get('/', async (req, res) => {
+router.get('/:roomId?', async (req, res) => {
   try {
-    const rooms = await Room.find({});
+    const roomId = req.params.roomId;
+    let rooms = '';
+    if (roomId) {
+      rooms = await Room.findOne({roomId});
+    } else {
+      rooms = await Room.find({});
+    }
     res.status(200).json({
       success: true,
       data: {

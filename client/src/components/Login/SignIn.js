@@ -1,8 +1,8 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import {useNavigate} from 'react-router-dom';
 
 function SignInForm() {
-  const [state, setState] = React.useState({
+  const [state, setState] = useState({
     email: '',
     password: '',
   });
@@ -20,7 +20,6 @@ function SignInForm() {
     evt.preventDefault();
 
     const {email, password} = state;
-    // TODO: check if token exists in local storage and redirect to dashboard page if it does
     try {
       const response = await fetch('http://localhost:8080/userAuth/login', {
         method: 'POST',
@@ -28,13 +27,12 @@ function SignInForm() {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({email, password}),
-        // TODO: if token exist send token as part of request
       });
 
       const res = await response.json();
-      if (response.ok) {
+      if (res.success === true) {
         // login successed
-        localStorage.setItem('userInfo', JSON.stringify(response));
+        localStorage.setItem('userInfo', JSON.stringify(res));
         alert(res.message);
         navigate('/room');
       } else {
@@ -52,6 +50,16 @@ function SignInForm() {
       });
     }
   };
+
+  useEffect(() => {
+    const userInfo = localStorage.getItem('userInfo');
+    if (userInfo) {
+      const {token} = JSON.parse(userInfo);
+      if (token) {
+        navigate('/room');
+      }
+    }
+  }, []);
 
   return (
     <div className="form-container sign-in-container">

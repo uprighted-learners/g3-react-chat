@@ -1,0 +1,11 @@
+.room-name {
+  font-weight: bolder;
+  display: flex;
+  justify-content: center;
+  font-size: xx-large;
+  position: fixed;
+  top: 0;
+  height: 5vh;
+  width: inherit;
+  background-color: dimgray;
+}

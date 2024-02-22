@@ -42,7 +42,7 @@ Your user document in your `users` collection should resemble the following:
 
 ## Room Schema
 
-Your room document in your `rooms` collection should resemble the following:
+Your room document in your `rooms` collection should resemble the following:>
 
 ```json
 
