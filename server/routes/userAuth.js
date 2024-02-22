@@ -2,6 +2,7 @@ require('dotenv').config();
 const sendErrorResponse = require('../utils/errorHandler');
 const router = require('express').Router();
 const User = require('../models/Users');
+const Room = require('../models/Rooms');
 const bcryptjs = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const checkMissingFields = require('./middleware/checkMissingFields');
@@ -27,6 +28,7 @@ router.post('/register', checkMissingFields('firstName', 'lastName', 'email', 'p
         token,
       },
     });
+    await Room.updateOne({_id: '65c29e140513b28af7b13bd7'}, {$addToSet: {addedUsers: newUser._id}});
   } catch (error) {
     sendErrorResponse(error, res);
   }

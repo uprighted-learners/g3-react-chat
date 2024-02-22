@@ -49,13 +49,14 @@ function Room() {
 
   async function selectRoom(room) {
     setIsLoading(true);
-    // TODO: remove user from previous room and add user to selected room
     localStorage.setItem('roomInfo', JSON.stringify(room));
   }
 
   async function addAllRooms() {
     const roomsData = await fetchRooms('');
-    setRooms(roomsData);
+    const userId = JSON.parse(localStorage.getItem('userInfo')).user._id;
+    const availableRooms = roomsData.filter((data) => data.addedUsers.includes(userId));
+    setRooms(availableRooms);
   }
 
   function logout() {
