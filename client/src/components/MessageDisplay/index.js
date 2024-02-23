@@ -32,6 +32,16 @@ const MessageDisplay = (props) => {
     }
   }, [props.messagesData]);
 
+  useEffect(() => {
+    let intervalId = setInterval(() => {
+      setRefresh((refresh) => !refresh);
+    }, 5000);
+
+    return () => {
+      clearInterval(intervalId);
+    };
+  }, []);
+
   return (
     <div className="room-layout">
       <div className="message-display" ref={messageDisplayRef}>
