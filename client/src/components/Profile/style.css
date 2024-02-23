@@ -1,0 +1,19 @@
+.profile {
+  border: 1px solid black;
+  border-radius: 5px;
+  margin-top: auto;
+  width: inherit;
+  height: 10vh;
+  position: relative;
+  bottom: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+.profile button {
+  margin: 5px;
+  padding: 5px;
+  cursor: pointer;
+}

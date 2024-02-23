@@ -1,0 +1,55 @@
+.room-list-layout {
+  width: inherit;
+  height: 100%;
+  overflow-y: auto;
+}
+
+.room {
+  margin: 1%;
+  padding: 10px;
+  border-radius: 5px;
+  box-shadow: inset -6px rgba(0, 0, 0, 0.4);
+  background-color: orangered;
+  color: white;
+  width: 97%;
+  height: 10vh;
+}
+
+/* this button css is from Home's style.css. Consider move this style to global by making it as it own "share" component */
+/* button {
+  border-radius: 20px;
+  border: 1px solid #ff4b2b;
+  background-color: #ff4b2b;
+  color: #ffffff;
+  font-size: 12px;
+  font-weight: bold;
+  padding: 12px 45px;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  transition: transform 80ms ease-in;
+}
+
+button:active {
+  transform: scale(0.95);
+}
+
+button:focus {
+  outline: none;
+} */
+
+.room-name-layout {
+  display: flex;
+  flex-direction: row;
+}
+
+.room-name-btn {
+  padding: 12px 35px;
+  width: 8vw;
+  margin: 10px 0;
+}
+
+.room-update {
+  padding: 5px;
+  position: relative;
+  height: fit-content;
+}
