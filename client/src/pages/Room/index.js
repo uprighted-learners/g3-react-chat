@@ -53,10 +53,14 @@ function Room() {
   }
 
   async function addAllRooms() {
-    const roomsData = await fetchRooms('');
-    const userId = JSON.parse(localStorage.getItem('userInfo')).user._id;
-    const availableRooms = roomsData.filter((data) => data.addedUsers.includes(userId));
-    setRooms(availableRooms);
+    const allRoomData = await fetchRooms('');
+    const user = JSON.parse(localStorage.getItem('userInfo')).user;
+    if (user.isAdmin) {
+      setRooms(allRoomData);
+    } else {
+      const availableRooms = allRoomData.filter((data) => data.addedUsers.includes(user._id));
+      setRooms(availableRooms);
+    }
   }
 
   function logout() {

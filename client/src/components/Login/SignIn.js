@@ -54,10 +54,7 @@ function SignInForm() {
   useEffect(() => {
     const userInfo = localStorage.getItem('userInfo');
     if (userInfo) {
-      const {token} = JSON.parse(userInfo);
-      if (token) {
-        navigate('/room');
-      }
+      navigate('/room');
     }
   }, []);
 

@@ -16,7 +16,7 @@
 }
 
 /* this button css is from Home's style.css. Consider move this style to global by making it as it own "share" component */
-button {
+/* button {
   border-radius: 20px;
   border: 1px solid #ff4b2b;
   background-color: #ff4b2b;
@@ -35,4 +35,21 @@ button:active {
 
 button:focus {
   outline: none;
+} */
+
+.room-name-layout {
+  display: flex;
+  flex-direction: row;
+}
+
+.room-name-btn {
+  padding: 12px 35px;
+  width: 8vw;
+  margin: 10px 0;
+}
+
+.room-update {
+  padding: 5px;
+  position: relative;
+  height: fit-content;
 }
